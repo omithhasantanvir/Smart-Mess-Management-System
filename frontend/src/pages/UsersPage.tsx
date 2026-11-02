@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { User } from '../types';
+import { useAuth } from '../context/AuthContext';
 import {
   Shield,
   Key,
@@ -13,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export const UsersPage: React.FC = () => {
+  const { user: currentUser } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,6 +51,13 @@ export const UsersPage: React.FC = () => {
   };
 
   const handleToggleActive = async (userId: string, currentActive: boolean) => {
+    if (currentUser && currentUser._id === userId && currentActive) {
+      alert('You cannot deactivate your own logged-in account.');
+      return;
+    }
+    if (!confirm(`Are you sure you want to ${currentActive ? 'deactivate' : 'activate'} this user?`)) {
+      return;
+    }
     try {
       await api.updateUserRole(userId, undefined as any, !currentActive);
       fetchUsers();

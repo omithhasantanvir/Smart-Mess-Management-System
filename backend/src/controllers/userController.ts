@@ -28,6 +28,10 @@ export const updateUserRole = async (req: AuthRequest, res: Response): Promise<v
       user.role = role;
     }
     if (isActive !== undefined) {
+      if (req.user && user._id.toString() === req.user._id.toString() && isActive === false) {
+        res.status(400).json({ success: false, message: 'You cannot deactivate your own account.' });
+        return;
+      }
       user.isActive = Boolean(isActive);
     }
 
