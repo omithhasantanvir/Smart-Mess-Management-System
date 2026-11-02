@@ -9,10 +9,14 @@ export const getMarketTransactions = async (req: AuthRequest, res: Response): Pr
     const { month, date, purchasedBy, category } = req.query;
     const query: any = {};
 
-    if (month) query.month = month;
-    if (date) query.date = date;
-    if (purchasedBy) query.purchasedBy = purchasedBy;
-    if (category) query.category = category;
+    if (month && month !== 'undefined') query.month = month;
+    if (date && date !== 'undefined') query.date = date;
+    if (purchasedBy && purchasedBy !== 'undefined' && purchasedBy !== 'null' && purchasedBy !== '') {
+      query.purchasedBy = purchasedBy;
+    }
+    if (category && category !== 'undefined' && category !== 'null' && category !== '') {
+      query.category = category;
+    }
 
     // Member portal constraint: if logged in as member, they can optionally view all mess bazar or their own
     const transactions = await MarketTransaction.find(query)

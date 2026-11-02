@@ -11,8 +11,8 @@ export const getExpenses = async (req: AuthRequest, res: Response): Promise<void
     const { month, category } = req.query;
     const query: any = {};
 
-    if (month) query.month = month;
-    if (category) query.category = category;
+    if (month && month !== 'undefined') query.month = month;
+    if (category && category !== 'undefined' && category !== 'null' && category !== '') query.category = category;
 
     const expenses = await Expense.find(query)
       .populate('paidBy', 'name memberCode')

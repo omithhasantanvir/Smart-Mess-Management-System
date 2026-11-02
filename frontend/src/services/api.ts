@@ -5,6 +5,17 @@ function getAuthHeader(): HeadersInit {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
+function cleanQuery(params?: Record<string, any>): string {
+  if (!params) return '';
+  const search = new URLSearchParams();
+  for (const [key, val] of Object.entries(params)) {
+    if (val !== undefined && val !== null && val !== '' && val !== 'undefined') {
+      search.append(key, String(val));
+    }
+  }
+  return search.toString();
+}
+
 async function handleResponse(res: Response) {
   const data = await res.json();
   if (!res.ok) {
@@ -48,8 +59,8 @@ export const api = {
 
   // Members
   getMembers: async (params?: { status?: string; search?: string }) => {
-    const q = new URLSearchParams(params as any).toString();
-    const res = await fetch(`${API_BASE}/members?${q}`, {
+    const q = cleanQuery(params);
+    const res = await fetch(`${API_BASE}/members${q ? `?${q}` : ''}`, {
       headers: { ...getAuthHeader() }
     });
     return handleResponse(res);
@@ -108,8 +119,8 @@ export const api = {
 
   // Market / Bazar
   getMarketTransactions: async (params?: { month?: string; date?: string; purchasedBy?: string; category?: string }) => {
-    const q = new URLSearchParams(params as any).toString();
-    const res = await fetch(`${API_BASE}/market?${q}`, {
+    const q = cleanQuery(params);
+    const res = await fetch(`${API_BASE}/market${q ? `?${q}` : ''}`, {
       headers: { ...getAuthHeader() }
     });
     return handleResponse(res);
@@ -146,8 +157,8 @@ export const api = {
 
   // Deposits
   getDeposits: async (params?: { month?: string; member?: string; paymentMethod?: string }) => {
-    const q = new URLSearchParams(params as any).toString();
-    const res = await fetch(`${API_BASE}/deposits?${q}`, {
+    const q = cleanQuery(params);
+    const res = await fetch(`${API_BASE}/deposits${q ? `?${q}` : ''}`, {
       headers: { ...getAuthHeader() }
     });
     return handleResponse(res);
@@ -178,8 +189,8 @@ export const api = {
 
   // Expenses & House bills
   getExpenses: async (params?: { month?: string; category?: string }) => {
-    const q = new URLSearchParams(params as any).toString();
-    const res = await fetch(`${API_BASE}/expenses?${q}`, {
+    const q = cleanQuery(params);
+    const res = await fetch(`${API_BASE}/expenses${q ? `?${q}` : ''}`, {
       headers: { ...getAuthHeader() }
     });
     return handleResponse(res);

@@ -38,27 +38,32 @@ export const DepositsPage: React.FC<{ selectedMonth: string }> = ({ selectedMont
   const [formNotes, setFormNotes] = useState('');
   const [formReceipt, setFormReceipt] = useState<File | null>(null);
 
-  const fetchData = async () => {
+  const fetchMembers = async () => {
+    try {
+      const memRes = await api.getMembers({ status: 'ACTIVE' });
+      if (memRes.success && memRes.members) {
+        setMembers(memRes.members);
+        if (memRes.members.length > 0) {
+          setFormMember(prev => prev || memRes.members[0]._id);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fetchDeposits = async () => {
     try {
       setLoading(true);
-      const [depRes, memRes] = await Promise.all([
-        api.getDeposits({
-          month: selectedMonth,
-          member: filterMember || undefined,
-          paymentMethod: filterMethod || undefined
-        }),
-        api.getMembers({ status: 'ACTIVE' })
-      ]);
+      const depRes = await api.getDeposits({
+        month: selectedMonth,
+        member: filterMember || undefined,
+        paymentMethod: filterMethod || undefined
+      });
 
       if (depRes.success) {
         setDeposits(depRes.deposits);
         setTotalCollected(depRes.totalAmount);
-      }
-      if (memRes.success) {
-        setMembers(memRes.members);
-        if (!formMember && memRes.members.length > 0) {
-          setFormMember(memRes.members[0]._id);
-        }
       }
     } catch (err) {
       console.error(err);
@@ -68,8 +73,18 @@ export const DepositsPage: React.FC<{ selectedMonth: string }> = ({ selectedMont
   };
 
   useEffect(() => {
-    fetchData();
+    fetchMembers();
+  }, []);
+
+  useEffect(() => {
+    fetchDeposits();
   }, [selectedMonth, filterMember, filterMethod]);
+
+  const handleOpenModal = () => {
+    if (members.length === 0) fetchMembers();
+    if (!formMember && members.length > 0) setFormMember(members[0]._id);
+    setIsModalOpen(true);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,7 +140,7 @@ export const DepositsPage: React.FC<{ selectedMonth: string }> = ({ selectedMont
           </p>
         </div>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleOpenModal}
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition"
         >
           <Plus className="w-4 h-4" />

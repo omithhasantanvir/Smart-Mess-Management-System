@@ -9,10 +9,12 @@ export const getDeposits = async (req: AuthRequest, res: Response): Promise<void
     const { month, date, member, paymentMethod } = req.query;
     const query: any = {};
 
-    if (month) query.month = month;
-    if (date) query.date = date;
-    if (member) query.member = member;
-    if (paymentMethod) query.paymentMethod = paymentMethod;
+    if (month && month !== 'undefined') query.month = month;
+    if (date && date !== 'undefined') query.date = date;
+    if (member && member !== 'undefined' && member !== 'null' && member !== '') query.member = member;
+    if (paymentMethod && paymentMethod !== 'undefined' && paymentMethod !== 'null' && paymentMethod !== '') {
+      query.paymentMethod = paymentMethod;
+    }
 
     const deposits = await Deposit.find(query)
       .populate('member', 'name memberCode')

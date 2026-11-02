@@ -47,38 +47,57 @@ export const DailyBazarPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
     { name: '', quantity: 1, unit: 'kg', unitPrice: 0, totalPrice: 0, category: 'GROCERY' }
   ]);
 
-  const fetchData = async () => {
+  const fetchMembers = async () => {
+    try {
+      const memRes = await api.getMembers({ status: 'ACTIVE' });
+      if (memRes.success && memRes.members) {
+        setMembers(memRes.members);
+        if (memRes.members.length > 0) {
+          setFormBuyer(prev => prev || memRes.members[0]._id);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to fetch members:', err);
+    }
+  };
+
+  const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const [txRes, memRes] = await Promise.all([
-        api.getMarketTransactions({
-          month: selectedMonth,
-          purchasedBy: filterMember || undefined,
-          category: filterCategory || undefined
-        }),
-        api.getMembers({ status: 'ACTIVE' })
-      ]);
+      const txRes = await api.getMarketTransactions({
+        month: selectedMonth,
+        purchasedBy: filterMember || undefined,
+        category: filterCategory || undefined
+      });
 
       if (txRes.success) {
         setTransactions(txRes.transactions);
         setTotalSpent(txRes.totalAmount);
       }
-      if (memRes.success) {
-        setMembers(memRes.members);
-        if (!formBuyer && memRes.members.length > 0) {
-          setFormBuyer(memRes.members[0]._id);
-        }
-      }
     } catch (err) {
-      console.error(err);
+      console.error('Failed to fetch transactions:', err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchMembers();
+  }, []);
+
+  useEffect(() => {
+    fetchTransactions();
   }, [selectedMonth, filterMember, filterCategory]);
+
+  const handleOpenModal = () => {
+    if (members.length === 0) {
+      fetchMembers();
+    }
+    if (!formBuyer && members.length > 0) {
+      setFormBuyer(members[0]._id);
+    }
+    setIsModalOpen(true);
+  };
 
   const handleAddItemRow = () => {
     setItems(prev => [
@@ -163,7 +182,7 @@ export const DailyBazarPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
           </p>
         </div>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleOpenModal}
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold shadow-lg shadow-purple-600/30 transition"
         >
           <Plus className="w-4 h-4" />
@@ -362,14 +381,20 @@ export const DailyBazarPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                     required
                     value={formBuyer}
                     onChange={(e) => setFormBuyer(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500 font-semibold"
                   >
-                    <option value="">Select Member</option>
-                    {members.map((m) => (
-                      <option key={m._id} value={m._id}>
-                        {m.name} ({m.memberCode})
-                      </option>
-                    ))}
+                    {members.length === 0 ? (
+                      <option value="">No active members found</option>
+                    ) : (
+                      <>
+                        <option value="">Select Member</option>
+                        {members.map((m) => (
+                          <option key={m._id} value={m._id}>
+                            {m.name} ({m.memberCode})
+                          </option>
+                        ))}
+                      </>
+                    )}
                   </select>
                 </div>
                 <div>
