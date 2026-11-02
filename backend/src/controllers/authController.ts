@@ -22,10 +22,15 @@ const generateToken = (user: any) => {
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password, role, memberId } = req.body;
+    const { name, email, password, role, memberId, phone, roomNumber } = req.body;
 
     if (!name || !email || !password) {
       res.status(400).json({ success: false, message: 'Please provide name, email, and password.' });
+      return;
+    }
+
+    if (password.length < 6) {
+      res.status(400).json({ success: false, message: 'Password must be at least 6 characters long.' });
       return;
     }
 
@@ -35,19 +40,46 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    let assignedMemberId = memberId || null;
+    const userRole = role || 'MEMBER';
+
+    // If registering as a MEMBER without existing memberId, auto-link or create Member profile
+    if (!assignedMemberId && userRole === 'MEMBER') {
+      let existingMember = await Member.findOne({ email: email.toLowerCase() });
+      if (existingMember) {
+        assignedMemberId = existingMember._id;
+      } else {
+        const count = await Member.countDocuments();
+        const nextCode = `MEM-${String(count + 1).padStart(3, '0')}`;
+        const newMember = await Member.create({
+          memberCode: nextCode,
+          name: name.trim(),
+          email: email.toLowerCase().trim(),
+          phone: phone || '',
+          roomNumber: roomNumber || '',
+          address: 'Mess Resident',
+          status: 'ACTIVE',
+          currentBalance: 0,
+          joiningDate: new Date()
+        });
+        assignedMemberId = newMember._id;
+      }
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await User.create({
-      name,
-      email: email.toLowerCase(),
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
       password: hashedPassword,
-      role: role || 'MEMBER',
-      memberId: memberId || null
+      role: userRole,
+      memberId: assignedMemberId,
+      isActive: true
     });
 
-    if (memberId) {
-      await Member.findByIdAndUpdate(memberId, { userId: newUser._id });
+    if (assignedMemberId) {
+      await Member.findByIdAndUpdate(assignedMemberId, { userId: newUser._id });
     }
 
     await AuditLog.create({
