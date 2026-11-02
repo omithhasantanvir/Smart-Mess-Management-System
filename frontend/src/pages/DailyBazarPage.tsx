@@ -153,7 +153,7 @@ export const DailyBazarPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
       setItems([{ name: '', quantity: 1, unit: 'kg', unitPrice: 0, totalPrice: 0, category: 'GROCERY' }]);
       setFormNotes('');
       setFormReceipt(null);
-      fetchData();
+      fetchTransactions();
     } catch (err: any) {
       alert(err.message || 'Failed to record bazar transaction.');
     } finally {
@@ -165,7 +165,7 @@ export const DailyBazarPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
     if (!confirm('Are you sure you want to delete this market transaction?')) return;
     try {
       await api.deleteMarketTransaction(id);
-      fetchData();
+      fetchTransactions();
     } catch (err: any) {
       alert(err.message || 'Failed to delete transaction.');
     }

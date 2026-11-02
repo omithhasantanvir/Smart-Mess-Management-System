@@ -111,7 +111,7 @@ export const DepositsPage: React.FC<{ selectedMonth: string }> = ({ selectedMont
       setFormNotes('');
       setFormTrxId('');
       setFormReceipt(null);
-      fetchData();
+      fetchDeposits();
     } catch (err: any) {
       alert(err.message || 'Failed to record deposit.');
     } finally {
@@ -123,7 +123,7 @@ export const DepositsPage: React.FC<{ selectedMonth: string }> = ({ selectedMont
     if (!confirm('Are you sure you want to delete this deposit record?')) return;
     try {
       await api.deleteDeposit(id);
-      fetchData();
+      fetchDeposits();
     } catch (err: any) {
       alert(err.message || 'Failed to delete deposit.');
     }
