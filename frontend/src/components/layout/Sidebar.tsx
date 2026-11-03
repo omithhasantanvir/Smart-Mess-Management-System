@@ -108,33 +108,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar container */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-64 bg-[#0d1527] border-r border-slate-800/80 flex flex-col transition-transform duration-200 ease-in-out shadow-xl ${
+        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-[#0d1527] border-r border-slate-200 dark:border-slate-800/80 flex flex-col transition-all duration-200 ease-in-out shadow-xl ${
           isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         {/* Brand header */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-slate-800/80 bg-[#0f192e]">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0f192e]">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md">
               <UtensilsCrossed className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h1 className="font-bold text-white text-sm tracking-tight leading-none">
+                <h1 className="font-bold text-slate-900 dark:text-white text-sm tracking-tight leading-none">
                   Smart Mess
                 </h1>
-                <span className="px-1.5 py-0.2 rounded text-[9px] font-bold tracking-wide bg-brand-500/20 text-brand-300">
+                <span className="px-1.5 py-0.2 rounded text-[9px] font-bold tracking-wide bg-brand-50 text-brand-700 dark:bg-brand-500/20 dark:text-brand-300 border border-brand-200 dark:border-brand-500/30">
                   SYSTEM
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium tracking-normal mt-0.5">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium tracking-normal mt-0.5">
                 Mess Management
               </p>
             </div>
           </div>
           <button
             onClick={onCloseMobile}
-            className="lg:hidden p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/60 transition"
+            className="lg:hidden p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800/60 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -148,7 +148,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
             return (
               <div key={idx} className="space-y-1">
-                <div className="px-3 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <div className="px-3 pb-1 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                   {section.title}
                 </div>
                 {visibleItems.map((item) => {
@@ -160,19 +160,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       onClick={() => handleSelect(item.key as NavItemKey)}
                       className={`w-full group flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-colors ${
                         isActive
-                          ? 'bg-brand-600/20 text-brand-300 border border-brand-500/30 font-semibold'
-                          : 'text-slate-300 hover:text-white hover:bg-slate-800/50 border border-transparent'
+                          ? 'bg-brand-50 text-brand-700 dark:bg-brand-600/20 dark:text-brand-300 border border-brand-200 dark:border-brand-500/30 font-semibold shadow-sm'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 border border-transparent'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
                         <Icon
                           className={`w-4 h-4 transition-colors ${
-                            isActive ? 'text-brand-400' : 'text-slate-400 group-hover:text-slate-200'
+                            isActive ? 'text-brand-600 dark:text-brand-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200'
                           }`}
                         />
                         <span>{item.label}</span>
                       </div>
-                      {isActive && <ChevronRight className="w-3.5 h-3.5 text-brand-400" />}
+                      {isActive && <ChevronRight className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />}
                     </button>
                   );
                 })}
@@ -182,14 +182,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Bottom User Card */}
-        <div className="p-3 border-t border-slate-800/80 bg-[#0a101f]">
-          <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between gap-2.5">
+        <div className="p-3 border-t border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0a101f]">
+          <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2.5 shadow-sm">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-lg bg-brand-600/30 border border-brand-500/40 flex items-center justify-center text-brand-300 font-bold text-xs flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-brand-50 dark:bg-brand-600/30 border border-brand-200 dark:border-brand-500/40 flex items-center justify-center text-brand-700 dark:text-brand-300 font-bold text-xs flex-shrink-0">
                 {user?.name?.charAt(0).toUpperCase() || 'U'}
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-semibold text-slate-200 truncate leading-tight">
+                <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate leading-tight">
                   {user?.name || 'User'}
                 </p>
                 <div className="flex items-center gap-1.5 mt-0.5">
@@ -206,7 +206,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               onClick={logout}
               title="Sign Out"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-300 hover:bg-rose-950/30 transition flex-shrink-0"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition flex-shrink-0"
             >
               <LogOut className="w-4 h-4" />
             </button>
