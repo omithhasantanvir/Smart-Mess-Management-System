@@ -203,12 +203,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
 
-          {/* Full-width, Prominent Logout Button */}
+          {/* Full-width, Prominent Solid Logout Button */}
           <button
             onClick={logout}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 text-xs font-bold transition shadow-sm"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition shadow-sm shadow-rose-600/20"
           >
-            <LogOut className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+            <LogOut className="w-4 h-4 text-white" />
             <span>Sign Out / Logout</span>
           </button>
         </div>
