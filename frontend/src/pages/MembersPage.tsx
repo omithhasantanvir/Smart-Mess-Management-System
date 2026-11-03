@@ -30,6 +30,7 @@ export const MembersPage: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingMember, setEditingMember] = useState<Member | null>(null);
   const [viewingMember, setViewingMember] = useState<any | null>(null);
+  const [deleteConfirmMember, setDeleteConfirmMember] = useState<Member | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
 
   // Form state
@@ -280,8 +281,8 @@ export const MembersPage: React.FC = () => {
                           <Edit2 className="w-3.5 h-3.5" />
                         </button>
                         <button
-                          onClick={() => handleDeleteMember(m._id, m.name)}
-                          title="Deactivate / Delete"
+                          onClick={() => setDeleteConfirmMember(m)}
+                          title="Deactivate or Permanently Delete"
                           className="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-950/60 text-slate-300 hover:text-rose-400 border border-slate-700 transition"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -495,6 +496,81 @@ export const MembersPage: React.FC = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete / Deactivate Member Dialog */}
+      {deleteConfirmMember && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#111a2e] border border-slate-800 rounded-2xl w-full max-w-md shadow-2xl p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-3 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                <Trash2 className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-white">
+                  Remove Member
+                </h3>
+                <p className="text-xs text-slate-400">
+                  {deleteConfirmMember.name} ({deleteConfirmMember.memberCode})
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed mb-5">
+              Please choose how you want to remove this member:
+            </p>
+
+            <div className="space-y-3">
+              <button
+                onClick={async () => {
+                  setActionLoading(true);
+                  try {
+                    await api.deleteMember(deleteConfirmMember._id, true);
+                    setDeleteConfirmMember(null);
+                    fetchMembers();
+                  } catch (err: any) {
+                    alert(err.message || 'Failed to delete member.');
+                  } finally {
+                    setActionLoading(false);
+                  }
+                }}
+                disabled={actionLoading}
+                className="w-full py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition flex items-center justify-between shadow-lg shadow-rose-600/20"
+              >
+                <span>Permanently Delete Member</span>
+                <span className="text-[10px] opacity-80">Removes from database</span>
+              </button>
+
+              <button
+                onClick={async () => {
+                  setActionLoading(true);
+                  try {
+                    await api.deleteMember(deleteConfirmMember._id, false);
+                    setDeleteConfirmMember(null);
+                    fetchMembers();
+                  } catch (err: any) {
+                    alert(err.message || 'Failed to deactivate member.');
+                  } finally {
+                    setActionLoading(false);
+                  }
+                }}
+                disabled={actionLoading}
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition flex items-center justify-between"
+              >
+                <span>Deactivate (Status: INACTIVE)</span>
+                <span className="text-[10px] text-slate-400">Keeps financial history</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmMember(null)}
+                className="w-full py-2 rounded-xl text-slate-400 hover:text-white text-xs font-medium transition text-center"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>

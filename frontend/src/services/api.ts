@@ -87,8 +87,8 @@ export const api = {
     });
     return handleResponse(res);
   },
-  deleteMember: async (id: string) => {
-    const res = await fetch(`${API_BASE}/members/${id}`, {
+  deleteMember: async (id: string, force?: boolean) => {
+    const res = await fetch(`${API_BASE}/members/${id}${force ? '?force=true' : ''}`, {
       method: 'DELETE',
       headers: { ...getAuthHeader() }
     });

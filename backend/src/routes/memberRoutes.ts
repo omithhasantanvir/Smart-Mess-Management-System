@@ -16,7 +16,7 @@ router.get('/', getMembers);
 router.get('/:id', getMemberById);
 router.post('/', authorize('ADMIN', 'MANAGER'), createMember);
 router.put('/:id', authorize('ADMIN', 'MANAGER'), updateMember);
-router.delete('/:id', authorize('ADMIN'), deleteMember);
+router.delete('/:id', authorize('ADMIN', 'MANAGER'), deleteMember);
 
 export default router;
 

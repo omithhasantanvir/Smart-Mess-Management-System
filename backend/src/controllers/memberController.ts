@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import { Member } from '../models/Member';
+import { User } from '../models/User';
 import { Meal } from '../models/Meal';
 import { Deposit } from '../models/Deposit';
 import { MarketTransaction } from '../models/MarketTransaction';
@@ -187,6 +188,8 @@ export const updateMember = async (req: AuthRequest, res: Response): Promise<voi
 export const deleteMember = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+    const { force } = req.query;
+
     const member = await Member.findById(id);
     if (!member) {
       res.status(404).json({ success: false, message: 'Member not found.' });
@@ -198,8 +201,8 @@ export const deleteMember = async (req: AuthRequest, res: Response): Promise<voi
     const hasDeposits = await Deposit.exists({ member: id });
     const hasMarket = await MarketTransaction.exists({ purchasedBy: id });
 
-    if (hasMeals || hasDeposits || hasMarket) {
-      // Soft deactivate instead of hard delete to preserve historical integrity
+    // If force is not requested and member has financial history, soft deactivate
+    if ((hasMeals || hasDeposits || hasMarket) && force !== 'true') {
       member.status = 'INACTIVE';
       member.leavingDate = new Date();
       await member.save();
@@ -214,10 +217,21 @@ export const deleteMember = async (req: AuthRequest, res: Response): Promise<voi
 
       res.json({
         success: true,
-        message: 'Member has financial records. Member deactivated instead of deleted to protect historical records.',
+        isDeactivated: true,
+        message: `Member "${member.name}" has transactions. Status was changed to INACTIVE. To permanently remove, select permanent delete.`,
         member
       });
       return;
+    }
+
+    // If force is true, cascade delete transactions to prevent orphaned records
+    if (force === 'true') {
+      await Promise.all([
+        Meal.deleteMany({ member: id }),
+        Deposit.deleteMany({ member: id }),
+        MarketTransaction.deleteMany({ purchasedBy: id }),
+        User.updateMany({ memberId: id }, { $set: { memberId: null } })
+      ]);
     }
 
     await Member.findByIdAndDelete(id);
@@ -227,10 +241,10 @@ export const deleteMember = async (req: AuthRequest, res: Response): Promise<voi
       userName: req.user?.name || 'Manager',
       action: 'DELETE_MEMBER',
       module: 'MEMBERS',
-      details: { memberCode: member.memberCode, name: member.name }
+      details: { memberCode: member.memberCode, name: member.name, force: force === 'true' }
     });
 
-    res.json({ success: true, message: 'Member permanently deleted.' });
+    res.json({ success: true, message: `Member "${member.name}" permanently deleted.` });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }
