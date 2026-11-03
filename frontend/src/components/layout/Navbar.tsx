@@ -8,7 +8,8 @@ import {
   Building2,
   Menu,
   Sun,
-  Moon
+  Moon,
+  LogOut
 } from 'lucide-react';
 import { format, addMonths, subMonths, parse } from 'date-fns';
 import { api } from '../../services/api';
@@ -26,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleSidebar,
   messName = 'Green View Smart Mess'
 }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [estMillRate, setEstMillRate] = useState<number | null>(null);
 
@@ -164,6 +165,16 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="hidden lg:flex items-center px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 text-xs font-medium text-slate-700 dark:text-slate-300">
           <span className="font-mono text-brand-600 dark:text-brand-400">৳ BDT</span>
         </div>
+
+        {/* Dedicated Logout Button in Header */}
+        <button
+          onClick={logout}
+          title="Sign Out of Mess System"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 dark:text-rose-300 border border-rose-200 dark:border-rose-900/50 text-xs font-bold transition shadow-sm"
+        >
+          <LogOut className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+          <span className="hidden sm:inline">Logout</span>
+        </button>
       </div>
     </header>
   );
