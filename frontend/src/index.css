@@ -18,7 +18,7 @@
 
   html.light body {
     background-color: #f8fafc;
-    color: #1e293b;
+    color: #0f172a;
   }
 
   html.dark body {
@@ -27,79 +27,88 @@
   }
 }
 
-/* Light & Dark aware surface utilities */
-@layer utilities {
-  .calm-panel {
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-  }
-  html.light .calm-panel {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-  }
-  html.dark .calm-panel {
-    background-color: #111a2e;
-    border: 1px solid #1e293b;
-  }
+/* Light Mode Overrides for Complete Pure Light Mode */
+html.light .bg-slate-900,
+html.light .bg-slate-950,
+html.light .bg-slate-900\/60,
+html.light .bg-slate-900\/70,
+html.light .bg-slate-900\/80,
+html.light .bg-slate-900\/90,
+html.light [class*="bg-[#0b1120]"],
+html.light [class*="bg-[#0d1527]"],
+html.light [class*="bg-[#111a2e]"],
+html.light [class*="bg-[#131d33]"],
+html.light [class*="bg-[#17233d]"] {
+  background-color: #ffffff;
+}
 
-  .calm-card {
-    transition: all 0.2s ease;
-  }
-  html.light .calm-card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
-  }
-  html.dark .calm-card {
-    background-color: #131d33;
-    border: 1px solid #1e293b;
-    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.25);
-  }
+html.light .bg-slate-800,
+html.light .bg-slate-800\/60,
+html.light .bg-slate-800\/70,
+html.light .bg-slate-800\/80 {
+  background-color: #f1f5f9;
+}
 
-  html.light .calm-card-hover:hover {
-    background-color: #f1f5f9;
-    border-color: #cbd5e1;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.08);
-  }
-  html.dark .calm-card-hover:hover {
-    background-color: #17233d;
-    border-color: #334155;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.35);
-  }
+html.light .border-slate-800,
+html.light .border-slate-700,
+html.light .border-slate-800\/60,
+html.light .border-slate-800\/80,
+html.light .border-slate-700\/60,
+html.light .border-slate-700\/80 {
+  border-color: #e2e8f0;
+}
 
-  .glass-panel {
-    transition: all 0.2s ease;
-  }
-  html.light .glass-panel {
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.04);
-  }
-  html.dark .glass-panel {
-    background-color: rgba(17, 26, 46, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(51, 65, 85, 0.5);
-  }
+html.light table thead {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
 
-  .glass-card {
-    transition: all 0.2s ease;
-  }
-  html.light .glass-card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.06);
-  }
-  html.dark .glass-card {
-    background-color: rgba(19, 29, 51, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(51, 65, 85, 0.4);
-    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.3);
-  }
+html.light table tbody tr {
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+html.light table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+html.light input:not([type="checkbox"]):not([type="radio"]),
+html.light select,
+html.light textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light h1.text-white,
+html.light h2.text-white,
+html.light h3.text-white,
+html.light h4.text-white,
+html.light p.text-white,
+html.light td.text-white {
+  color: #0f172a;
+}
+
+html.light .text-slate-100,
+html.light .text-slate-200 {
+  color: #1e293b;
+}
+
+html.light .text-slate-300 {
+  color: #334155;
+}
+
+html.light .text-slate-400 {
+  color: #64748b;
+}
+
+/* Preserve button text contrast */
+html.light button[class*="bg-brand-"] span,
+html.light button[class*="bg-brand-"] {
+  color: #ffffff !important;
+}
+html.light button[class*="bg-rose-"] span,
+html.light button[class*="bg-rose-"] {
+  color: #ffffff !important;
 }
 
 /* Custom scrollbars */
