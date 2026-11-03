@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">
               Mill Rate:
             </span>
-            <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-300">
+            <span className="text-xs font-mono font-bold text-amber-700 dark:text-amber-300">
               ৳{estMillRate.toFixed(2)}
             </span>
           </div>
