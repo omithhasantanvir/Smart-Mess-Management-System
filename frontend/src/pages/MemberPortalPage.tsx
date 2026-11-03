@@ -11,8 +11,7 @@ import {
   Printer,
   AlertCircle,
   RefreshCw,
-  Users,
-  ChevronDown
+  Users
 } from 'lucide-react';
 
 export const MemberPortalPage: React.FC<{ selectedMonth: string }> = ({ selectedMonth }) => {
@@ -20,91 +19,107 @@ export const MemberPortalPage: React.FC<{ selectedMonth: string }> = ({ selected
   const [members, setMembers] = useState<Member[]>([]);
   const [activeMemberId, setActiveMemberId] = useState<string>('');
   const [statement, setStatement] = useState<any | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [memberSettlement, setMemberSettlement] = useState<any | null>(null);
 
-  // Extract linked memberId from user if present
-  const userMemberId = typeof user?.memberId === 'object' ? (user.memberId as any)._id : user?.memberId;
+  // Extract linked memberId from current user
+  const userMemberId =
+    typeof user?.memberId === 'object' ? (user.memberId as any)?._id : user?.memberId;
 
-  // Load member list for admin/manager or fallback
+  // Initial load: Fetch members list and set starting activeMemberId
   useEffect(() => {
-    const initMembers = async () => {
+    let isMounted = true;
+
+    const setupMembers = async () => {
       try {
         const memRes = await api.getMembers({ status: 'ACTIVE' });
-        if (memRes.success && memRes.members?.length > 0) {
+        if (!isMounted) return;
+
+        if (memRes.success && memRes.members && memRes.members.length > 0) {
           setMembers(memRes.members);
+          // Prefer user's own linked memberId if exists, otherwise first member from list
           if (userMemberId) {
             setActiveMemberId(userMemberId);
           } else {
-            // Default to first member for Admin/Manager
             setActiveMemberId(memRes.members[0]._id);
           }
         } else if (userMemberId) {
           setActiveMemberId(userMemberId);
+        } else {
+          setLoading(false);
         }
       } catch (err) {
-        console.error('Failed to fetch members for portal:', err);
-        if (userMemberId) {
-          setActiveMemberId(userMemberId);
+        console.error('Failed to load active members:', err);
+        if (isMounted) {
+          if (userMemberId) {
+            setActiveMemberId(userMemberId);
+          } else {
+            setLoading(false);
+          }
         }
       }
     };
 
-    initMembers();
+    setupMembers();
+
+    return () => {
+      isMounted = false;
+    };
   }, [userMemberId]);
 
-  // Fetch statement data whenever activeMemberId or selectedMonth changes
-  const fetchPortalData = async (targetId: string) => {
-    if (!targetId) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const [stmtRes, setRes] = await Promise.all([
-        api.getMemberStatement(selectedMonth, targetId),
-        api.getMonthlySettlement(selectedMonth)
-      ]);
-
-      if (stmtRes.success) {
-        setStatement(stmtRes);
-      } else {
-        setStatement(null);
-      }
-
-      if (setRes.success && setRes.settlement && setRes.settlement.memberSettlements) {
-        const mySettlement = setRes.settlement.memberSettlements.find(
-          (m: any) =>
-            String(m.memberId || m.member?._id || m.member) === String(targetId)
-        );
-        setMemberSettlement(mySettlement || null);
-      } else {
-        setMemberSettlement(null);
-      }
-    } catch (err) {
-      console.error('Failed to load member portal data:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Load statement whenever activeMemberId or selectedMonth changes
   useEffect(() => {
-    if (activeMemberId) {
-      fetchPortalData(activeMemberId);
-    }
+    if (!activeMemberId) return;
+
+    let isMounted = true;
+    const fetchPortalData = async () => {
+      setLoading(true);
+      try {
+        const [stmtRes, setRes] = await Promise.all([
+          api.getMemberStatement(selectedMonth, activeMemberId).catch(() => ({ success: false })),
+          api.getMonthlySettlement(selectedMonth).catch(() => ({ success: false }))
+        ]);
+
+        if (!isMounted) return;
+
+        if (stmtRes && stmtRes.success) {
+          setStatement(stmtRes);
+        } else {
+          setStatement(null);
+        }
+
+        if (setRes && setRes.success && setRes.settlement && setRes.settlement.memberSettlements) {
+          const mySettlement = setRes.settlement.memberSettlements.find(
+            (m: any) =>
+              String(m.memberId || m.member?._id || m.member) === String(activeMemberId)
+          );
+          setMemberSettlement(mySettlement || null);
+        } else {
+          setMemberSettlement(null);
+        }
+      } catch (err) {
+        console.error('Error fetching portal data:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    fetchPortalData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [selectedMonth, activeMemberId]);
 
   const currentMemberObj =
-    statement?.member ||
-    members.find((m) => m._id === activeMemberId);
+    statement?.member || members.find((m) => m._id === activeMemberId);
 
-  // Fallback when a regular member has no linked member profile
+  // If no member is active and loading is finished
   if (!activeMemberId && !loading) {
     return (
       <div className="p-8 rounded-2xl bg-slate-900 border border-slate-800 text-center max-w-lg mx-auto mt-12">
         <AlertCircle className="w-10 h-10 text-amber-400 mx-auto mb-3" />
-        <h3 className="text-lg font-bold text-white">No Member Profile Linked</h3>
+        <h3 className="text-lg font-bold text-white">No Member Selected</h3>
         <p className="text-xs text-slate-400 mt-2 leading-relaxed">
           Your account is currently not linked to a Mess Resident ID. Please request your Mess Manager to link your profile under Member Management.
         </p>
@@ -112,12 +127,12 @@ export const MemberPortalPage: React.FC<{ selectedMonth: string }> = ({ selected
     );
   }
 
-  const totalMeals = memberSettlement?.totalMeals || 0;
-  const mealCost = memberSettlement?.mealCost || 0;
-  const marketPaid = memberSettlement?.marketPaid || 0;
-  const depositsPaid = memberSettlement?.depositsPaid || 0;
-  const finalBalance = memberSettlement?.finalBalance || 0;
-  const status = memberSettlement?.status || 'SETTLED';
+  const totalMeals = memberSettlement?.totalMeals ?? (statement?.itemizedMeals?.reduce((acc: number, m: any) => acc + (m.totalMeals || 0), 0) || 0);
+  const mealCost = memberSettlement?.mealCost ?? 0;
+  const marketPaid = memberSettlement?.marketPaid ?? (statement?.itemizedMarket?.reduce((acc: number, m: any) => acc + (m.totalAmount || 0), 0) || 0);
+  const depositsPaid = memberSettlement?.depositsPaid ?? (statement?.itemizedDeposits?.reduce((acc: number, d: any) => acc + (d.amount || 0), 0) || 0);
+  const finalBalance = memberSettlement?.finalBalance ?? 0;
+  const status = memberSettlement?.status ?? (finalBalance > 0 ? 'TO_PAY' : finalBalance < 0 ? 'TO_RECEIVE' : 'SETTLED');
 
   return (
     <div className="space-y-6">
@@ -154,7 +169,7 @@ export const MemberPortalPage: React.FC<{ selectedMonth: string }> = ({ selected
                 id="member-select"
                 value={activeMemberId}
                 onChange={(e) => setActiveMemberId(e.target.value)}
-                className="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer pr-1"
+                className="bg-slate-900 text-xs font-bold text-white focus:outline-none cursor-pointer pr-1"
               >
                 {members.map((m) => (
                   <option key={m._id} value={m._id} className="bg-slate-950 text-slate-100">
