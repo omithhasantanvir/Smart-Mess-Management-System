@@ -107,41 +107,97 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B1120] text-slate-900 dark:text-slate-100 flex flex-col justify-between py-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B1120] text-slate-900 dark:text-slate-100 flex flex-col justify-between py-6 px-4 sm:px-8 lg:px-12 relative overflow-hidden transition-colors duration-300">
       {/* Background ambient decorative glowing orbs */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-b from-brand-500/15 via-indigo-500/10 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-500/10 blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute top-0 left-1/4 w-[600px] h-[350px] bg-gradient-to-b from-indigo-500/15 via-purple-500/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500/10 blur-3xl pointer-events-none rounded-full" />
 
-      {/* Top Bar with Brand & Theme Toggle */}
-      <header className="relative z-10 max-w-5xl mx-auto w-full flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+      {/* Top Header with Theme Toggle */}
+      <header className="relative z-10 w-full max-w-7xl mx-auto flex items-center justify-between pb-4">
+        {/* Mobile branding only (hidden on desktop since left side displays big logo) */}
+        <div className="lg:hidden flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
             <UtensilsCrossed className="w-5 h-5" />
           </div>
-          <div>
-            <span className="font-extrabold text-base tracking-tight bg-gradient-to-r from-slate-900 via-brand-700 to-indigo-700 dark:from-white dark:via-brand-400 dark:to-indigo-300 bg-clip-text text-transparent">
-              Smart Mess
-            </span>
-            <span className="ml-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-brand-50 dark:bg-brand-950/80 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800">
-              PRO
-            </span>
-          </div>
+          <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
+            Smart Mess
+          </span>
+          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+            PRO
+          </span>
         </div>
+
+        <div className="hidden lg:block" />
 
         {/* Theme switcher button */}
         <button
           type="button"
           onClick={toggleTheme}
           aria-label="Toggle Theme"
-          className="p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 shadow-sm transition-all"
+          className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 shadow-sm transition-all cursor-pointer ml-auto"
         >
           {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
         </button>
       </header>
 
-      {/* Main Form Centerpiece */}
-      <main className="relative z-10 w-full max-w-[440px] mx-auto my-auto">
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-900/5 dark:shadow-black/40 rounded-3xl p-6 sm:p-8 transition-all">
+      {/* Main Container: Left Side Branding & Right Side Form */}
+      <main className="relative z-10 w-full max-w-7xl mx-auto my-auto py-4 lg:py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+        {/* LEFT COLUMN: Large Hero Branding */}
+        <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
+          {/* Large Logo */}
+          <div className="relative group">
+            <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-30 group-hover:opacity-60 transition duration-500" />
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-2xl shadow-indigo-500/30 ring-4 ring-white dark:ring-slate-800">
+              <UtensilsCrossed className="w-10 h-10 sm:w-12 sm:h-12" />
+            </div>
+          </div>
+
+          {/* Big Title & Subtitle */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+              <span>Next-Generation Mess Platform</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+              Smart{' '}
+              <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500 bg-clip-text text-transparent">
+                Mess
+              </span>
+            </h1>
+
+            <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-lg font-medium leading-relaxed">
+              Automated daily meals, real-time dynamic mill rates, seamless bazar ledger accounting, and 100% transparent member finances.
+            </p>
+          </div>
+
+          {/* Key Value Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 w-full max-w-lg pt-2 text-left">
+            <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-sm">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-slate-100">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-200 dark:ring-emerald-950" />
+                <span>Live Mill Rate Engine</span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-normal">
+                Auto-computed cost per meal updated instantly upon every bazar entry.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-sm">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-slate-100">
+                <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 ring-2 ring-indigo-200 dark:ring-indigo-950" />
+                <span>Deposit &amp; Settlements</span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-normal">
+                Instant payment receipts, member balances, and one-click month-end audit.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: The Login / Register Form Card */}
+        <div className="lg:col-span-6 flex justify-center lg:justify-end w-full">
+          <div className="w-full max-w-[440px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-900/5 dark:shadow-black/50 rounded-3xl p-6 sm:p-8 transition-all">
           
           {/* Header titles */}
           <div className="text-center mb-6">
@@ -452,17 +508,20 @@ export const LoginPage: React.FC = () => {
               </button>
             </form>
           )}
+          </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 text-center text-xs text-slate-500 dark:text-slate-500 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mt-6">
-        <div className="flex items-center gap-1.5">
-          <Shield className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
+      <footer className="relative z-10 text-center text-xs text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mt-8 pt-4">
+        <div className="flex items-center gap-1.5 font-medium">
+          <Shield className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
           <span>Encrypted Mess Accounting System</span>
         </div>
         <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
-        <span>Green View Smart Mess © 2026</span>
+        <span className="font-semibold text-slate-700 dark:text-slate-300">
+          Develop by OH Tanvir @{new Date().getFullYear()}
+        </span>
       </footer>
     </div>
   );
