@@ -143,30 +143,35 @@ export const LoginPage: React.FC = () => {
       {/* Main Container: Left Side Branding & Right Side Form */}
       <main className="relative z-10 w-full max-w-7xl mx-auto my-auto py-4 lg:py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
         {/* LEFT COLUMN: Large Hero Branding */}
-        <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
-          {/* Large Logo */}
-          <div className="relative group">
-            <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-30 group-hover:opacity-60 transition duration-500" />
-            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-2xl shadow-indigo-500/30 ring-4 ring-white dark:ring-slate-800">
-              <UtensilsCrossed className="w-10 h-10 sm:w-12 sm:h-12" />
+        <div className="lg:col-span-6 flex flex-col items-center text-center space-y-6">
+          {/* Large Logo - perfectly centered above Smart Mess */}
+          <div className="flex flex-col items-center">
+            <div className="relative group mb-5">
+              <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-35 group-hover:opacity-60 transition duration-500" />
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-2xl shadow-indigo-500/30 ring-4 ring-white dark:ring-slate-800">
+                <UtensilsCrossed className="w-10 h-10 sm:w-12 sm:h-12" />
+              </div>
             </div>
-          </div>
 
-          {/* Big Title & Subtitle */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold mb-3">
+            {/* Smart Mess Title */}
+            <div className="flex items-center justify-center gap-3">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                Smart{' '}
+                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500 bg-clip-text text-transparent">
+                  Mess
+                </span>
+              </h1>
+              <span className="text-xs font-extrabold px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/90 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 shadow-sm">
+                PRO
+              </span>
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold mt-4 mb-1">
               <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
               <span>Next-Generation Mess Platform</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-              Smart{' '}
-              <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500 bg-clip-text text-transparent">
-                Mess
-              </span>
-            </h1>
-
-            <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-lg font-medium leading-relaxed">
+            <p className="mt-3 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-md font-medium leading-relaxed">
               Automated daily meals, real-time dynamic mill rates, seamless bazar ledger accounting, and 100% transparent member finances.
             </p>
           </div>
