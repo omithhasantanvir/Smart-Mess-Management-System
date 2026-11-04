@@ -98,11 +98,11 @@ export const MillRatePage: React.FC<{ selectedMonth: string }> = ({ selectedMont
       </div>
 
       {/* Hero Mill Rate Formula Card */}
-      <div className="p-6 rounded-3xl bg-gradient-to-br from-brand-950 via-slate-900 to-slate-950 border border-brand-800/40 shadow-2xl relative overflow-hidden">
-        <div className="absolute right-0 top-0 translate-x-8 -translate-y-8 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="p-6 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-brand-950 dark:via-slate-900 dark:to-slate-950 border border-slate-200 dark:border-brand-800/40 shadow-sm dark:shadow-2xl relative overflow-hidden">
+        <div className="absolute right-0 top-0 translate-x-8 -translate-y-8 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none hidden dark:block" />
 
         <div className="max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-400 mb-2">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-2">
             <Calculator className="w-4 h-4" />
             Mathematical Meal Rate Equation ({selectedMonth})
           </div>
@@ -149,13 +149,13 @@ export const MillRatePage: React.FC<{ selectedMonth: string }> = ({ selectedMont
       </div>
 
       {/* 6 Months Mill Rate Trend Chart */}
-      <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-md">
+      <div className="p-5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-sm font-bold text-white tracking-tight">Mill Rate Historical Curve</h3>
-            <p className="text-xs text-slate-400">Historical trend of monthly meal rate changes</p>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Mill Rate Historical Curve</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Historical trend of monthly meal rate changes</p>
           </div>
-          <span className="text-xs text-brand-400 flex items-center gap-1">
+          <span className="text-xs text-brand-600 dark:text-brand-400 flex items-center gap-1">
             <TrendingUp className="w-4 h-4" />
             Automated Tracking
           </span>
@@ -185,12 +185,12 @@ export const MillRatePage: React.FC<{ selectedMonth: string }> = ({ selectedMont
       </div>
 
       {/* Rules Explanatory Box */}
-      <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 text-xs text-slate-300 space-y-2">
-        <h4 className="font-bold text-white text-sm flex items-center gap-2">
-          <Info className="w-4 h-4 text-brand-400" />
+      <div className="p-5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm text-xs text-slate-600 dark:text-slate-300 space-y-2">
+        <h4 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+          <Info className="w-4 h-4 text-brand-600 dark:text-brand-400" />
           Financial Rules Reference (from MEAL.xlsx)
         </h4>
-        <ul className="list-disc pl-5 space-y-1 text-slate-400">
+        <ul className="list-disc pl-5 space-y-1 text-slate-500 dark:text-slate-400">
           <li>Daily Bazar expenses automatically feed into the eligible meal expense pool.</li>
           <li>House rent, electricity, gas, and cook bills are tracked separately under Shared Bills and not blended into the meal rate unless configured in settings.</li>
           <li>Whenever a manager adds or edits daily meals or grocery receipts, the mill rate updates in real-time.</li>

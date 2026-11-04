@@ -117,7 +117,7 @@ export const MemberPortalPage: React.FC<{ selectedMonth: string }> = ({ selected
   // If no member is active and loading is finished
   if (!activeMemberId && !loading) {
     return (
-      <div className="p-8 rounded-2xl bg-slate-900 border border-slate-800 text-center max-w-lg mx-auto mt-12">
+      <div className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center max-w-lg mx-auto mt-12">
         <AlertCircle className="w-10 h-10 text-amber-400 mx-auto mb-3" />
         <h3 className="text-lg font-bold text-white">No Member Selected</h3>
         <p className="text-xs text-slate-400 mt-2 leading-relaxed">
