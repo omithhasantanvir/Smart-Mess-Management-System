@@ -107,13 +107,13 @@ html.light .text-slate-400 {
   color: #64748b;
 }
 
-/* Preserve solid button text contrast */
-html.light button[class*="bg-brand-6"],
-html.light button[class*="bg-brand-7"],
-html.light button[class*="bg-rose-6"],
-html.light button[class*="bg-rose-7"],
-html.light button[class*="bg-emerald-6"],
-html.light button[class*="bg-emerald-7"] {
+/* Preserve solid button text contrast only for direct solid background classes */
+html.light button.bg-brand-600,
+html.light button.bg-brand-700,
+html.light button.bg-rose-600,
+html.light button.bg-rose-700,
+html.light button.bg-emerald-600,
+html.light button.bg-emerald-700 {
   color: #ffffff !important;
 }
 
