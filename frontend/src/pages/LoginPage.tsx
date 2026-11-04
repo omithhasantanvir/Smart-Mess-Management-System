@@ -94,12 +94,6 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const fillDemo = (demoEmail: string, demoPass: string) => {
-    setMode('login');
-    setEmail(demoEmail);
-    setPassword(demoPass);
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Decorative gradient glow */}
@@ -386,39 +380,6 @@ export const LoginPage: React.FC = () => {
               </button>
             </form>
           )}
-
-          {/* Quick Demo Login Buttons */}
-          <div className="mt-8 pt-6 border-t border-slate-800">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider text-center mb-3">
-              Fast Demo One-Click Fill
-            </p>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => fillDemo('admin@mess.com', 'admin123')}
-                className="py-2 px-2 text-xs font-medium text-slate-200 bg-slate-800/80 hover:bg-brand-900/40 hover:border-brand-500/50 border border-slate-700 rounded-lg transition text-center"
-              >
-                <div className="font-bold text-brand-400">Admin</div>
-                <div className="text-[10px] text-slate-400">Full System</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => fillDemo('manager@mess.com', 'manager123')}
-                className="py-2 px-2 text-xs font-medium text-slate-200 bg-slate-800/80 hover:bg-brand-900/40 hover:border-brand-500/50 border border-slate-700 rounded-lg transition text-center"
-              >
-                <div className="font-bold text-amber-400">Manager</div>
-                <div className="text-[10px] text-slate-400">Daily Ops</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => fillDemo('member@mess.com', 'member123')}
-                className="py-2 px-2 text-xs font-medium text-slate-200 bg-slate-800/80 hover:bg-brand-900/40 hover:border-brand-500/50 border border-slate-700 rounded-lg transition text-center"
-              >
-                <div className="font-bold text-emerald-400">Member</div>
-                <div className="text-[10px] text-slate-400">Portal View</div>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

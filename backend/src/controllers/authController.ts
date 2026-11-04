@@ -41,7 +41,12 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     }
 
     let assignedMemberId = memberId || null;
-    const userRole = role || 'MEMBER';
+    const totalUsers = await User.countDocuments();
+    let userRole = role || 'MEMBER';
+    // The very first registered user in a fresh production system is automatically granted ADMIN
+    if (totalUsers === 0) {
+      userRole = 'ADMIN';
+    }
 
     // If registering as a MEMBER without existing memberId, auto-link or create Member profile
     if (!assignedMemberId && userRole === 'MEMBER') {
