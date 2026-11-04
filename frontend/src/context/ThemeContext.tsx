@@ -15,8 +15,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [theme, setThemeState] = useState<Theme>(() => {
     const saved = localStorage.getItem('smart_mess_theme');
     if (saved === 'light' || saved === 'dark') return saved;
-    // Default to dark mode for fintech feel
-    return 'dark';
+    // Default to clean light mode as requested
+    return 'light';
   });
 
   useEffect(() => {
