@@ -18,8 +18,7 @@ import {
   Eye,
   EyeOff,
   Sun,
-  Moon,
-  Sparkles
+  Moon
 } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
@@ -166,12 +165,7 @@ export const LoginPage: React.FC = () => {
               </span>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold mt-4 mb-1">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-              <span>Next-Generation Mess Platform</span>
-            </div>
-
-            <p className="mt-3 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-md font-medium leading-relaxed">
+            <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-md font-medium leading-relaxed">
               Automated daily meals, real-time dynamic mill rates, seamless bazar ledger accounting, and 100% transparent member finances.
             </p>
           </div>
