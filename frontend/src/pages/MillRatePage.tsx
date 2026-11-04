@@ -109,40 +109,40 @@ export const MillRatePage: React.FC<{ selectedMonth: string }> = ({ selectedMont
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center mt-4">
             {/* Step 1: Eligible expenses */}
-            <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center">
-              <span className="text-xs text-slate-400">Eligible Meal Cost</span>
-              <div className="text-2xl font-extrabold text-white font-mono mt-1">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Eligible Meal Cost</span>
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 font-mono mt-1">
                 ৳{eligibleExpenses.toLocaleString()}
               </div>
-              <span className="text-[10px] text-purple-400">Total Bazar Shopping</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">Total Bazar Shopping</span>
             </div>
 
             {/* Division sign */}
-            <div className="hidden md:flex justify-center text-slate-500 font-mono text-2xl font-black">
+            <div className="hidden md:flex justify-center text-slate-400 font-mono text-2xl font-black">
               ÷
             </div>
 
             {/* Step 2: Total mess meals */}
-            <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center">
-              <span className="text-xs text-slate-400">Total Mess Meals</span>
-              <div className="text-2xl font-extrabold text-white font-mono mt-1">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Total Mess Meals</span>
+              <div className="text-2xl font-bold text-brand-600 dark:text-brand-400 font-mono mt-1">
                 {totalMessMeals.toLocaleString()}
               </div>
-              <span className="text-[10px] text-amber-400">Across all active members</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">Across all active members</span>
             </div>
           </div>
 
           {/* Equals Result Box */}
-          <div className="mt-6 p-4 rounded-2xl bg-brand-900/30 border border-brand-700/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="mt-6 p-5 rounded-2xl bg-white dark:bg-[#131d33] border border-brand-200 dark:border-brand-500/30 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-              <div className="text-xs text-brand-300 font-semibold">Active Mill Rate:</div>
-              <div className="text-4xl font-black text-white font-mono tracking-tight mt-0.5">
+              <div className="text-xs text-brand-600 dark:text-brand-400 font-semibold uppercase tracking-wider">Active Mill Rate:</div>
+              <div className="text-4xl font-black text-slate-900 dark:text-white font-mono tracking-tight mt-0.5">
                 ৳{calculatedRate.toFixed(2)}
-                <span className="text-sm font-normal text-slate-400 ml-2">/ meal</span>
+                <span className="text-sm font-normal text-slate-500 dark:text-slate-400 ml-2">/ meal</span>
               </div>
             </div>
-            <div className="text-xs text-slate-300 max-w-sm text-right sm:text-right">
-              Every meal consumed by a member incurs exactly <strong className="text-white">৳{calculatedRate.toFixed(2)}</strong> deducted from their financial credits.
+            <div className="text-xs text-slate-600 dark:text-slate-300 max-w-sm text-right sm:text-right">
+              Every meal consumed by a member incurs exactly <strong className="text-slate-900 dark:text-white font-mono">৳{calculatedRate.toFixed(2)}</strong> deducted from their financial credits.
             </div>
           </div>
         </div>

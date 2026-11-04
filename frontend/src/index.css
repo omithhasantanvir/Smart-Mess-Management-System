@@ -38,7 +38,13 @@ html.light [class*="bg-[#0b1120]"],
 html.light [class*="bg-[#0d1527]"],
 html.light [class*="bg-[#111a2e]"],
 html.light [class*="bg-[#131d33]"],
-html.light [class*="bg-[#17233d]"] {
+html.light [class*="bg-[#17233d]"],
+html.light [class*="bg-purple-950"],
+html.light [class*="bg-sky-950"],
+html.light [class*="bg-emerald-950"],
+html.light [class*="bg-amber-950"],
+html.light [class*="bg-brand-900"],
+html.light [class*="bg-brand-950"] {
   background-color: #ffffff;
 }
 

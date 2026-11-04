@@ -192,25 +192,27 @@ export const DailyBazarPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
 
       {/* Summary KPI & Filters */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-purple-950/30 border border-purple-900/50 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs text-purple-300 font-medium uppercase tracking-wider">
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Total Bazar in {selectedMonth}
             </div>
-            <div className="text-2xl font-black text-white mt-1">৳{totalSpent.toLocaleString()}</div>
+            <div className="text-2xl font-bold font-mono text-purple-600 dark:text-purple-400 mt-1">
+              ৳{totalSpent.toLocaleString()}
+            </div>
           </div>
-          <div className="p-3 rounded-xl bg-purple-600 text-white shadow-lg shadow-purple-600/30">
+          <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-400/10 text-purple-600 dark:text-purple-400 border border-purple-100 dark:border-purple-500/20 shadow-sm">
             <ShoppingCart className="w-5 h-5" />
           </div>
         </div>
 
         {/* Filter by buyer */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-center">
-          <label className="text-[11px] font-semibold text-slate-400 mb-1">Filter By Shopper:</label>
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-center">
+          <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Filter By Shopper:</label>
           <select
             value={filterMember}
             onChange={(e) => setFilterMember(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-brand-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:border-brand-500"
           >
             <option value="">All Members</option>
             {members.map((m) => (
@@ -222,12 +224,12 @@ export const DailyBazarPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
         </div>
 
         {/* Filter by Category */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-center">
-          <label className="text-[11px] font-semibold text-slate-400 mb-1">Filter By Category:</label>
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-center">
+          <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Filter By Category:</label>
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-brand-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:border-brand-500"
           >
             <option value="">All Categories</option>
             <option value="GROCERY">Grocery & Dry Goods</option>
@@ -241,10 +243,10 @@ export const DailyBazarPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
       </div>
 
       {/* Transaction List Table */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="py-3.5 px-4 font-bold">Date</th>
                 <th className="py-3.5 px-4 font-bold">Purchased By (Shopper)</th>

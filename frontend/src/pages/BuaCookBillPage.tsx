@@ -114,24 +114,26 @@ export const BuaCookBillPage: React.FC<{ selectedMonth: string }> = ({ selectedM
 
       {/* KPI banner */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-900/50 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs text-amber-300 font-medium uppercase tracking-wider">
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Total Cook Salaries Paid (Lifetime)
             </div>
-            <div className="text-2xl font-black text-white mt-1">৳{totalPaid.toLocaleString()}</div>
+            <div className="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400 mt-1">
+              ৳{totalPaid.toLocaleString()}
+            </div>
           </div>
-          <div className="p-3 rounded-xl bg-amber-600 text-white shadow-lg shadow-amber-600/30">
+          <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-500/20 shadow-sm">
             <ChefHat className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs text-slate-400 font-medium uppercase tracking-wider">Active Members Sharing</div>
-            <div className="text-2xl font-black text-white mt-1">{members.length} Members</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Active Members Sharing</div>
+            <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white mt-1">{members.length} Members</div>
           </div>
-          <div className="text-xs text-slate-400 text-right">
+          <div className="text-xs text-slate-500 dark:text-slate-400 text-right">
             Shared equally across members <br />
             under monthly settlement
           </div>
@@ -139,10 +141,10 @@ export const BuaCookBillPage: React.FC<{ selectedMonth: string }> = ({ selectedM
       </div>
 
       {/* Table */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="py-3.5 px-4 font-bold">Month / Date</th>
                 <th className="py-3.5 px-4 font-bold">Description</th>

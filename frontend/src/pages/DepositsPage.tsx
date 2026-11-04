@@ -150,25 +150,27 @@ export const DepositsPage: React.FC<{ selectedMonth: string }> = ({ selectedMont
 
       {/* KPI & Filters */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-900/50 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs text-emerald-300 font-medium uppercase tracking-wider">
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Total Deposits in {selectedMonth}
             </div>
-            <div className="text-2xl font-black text-white mt-1">৳{totalCollected.toLocaleString()}</div>
+            <div className="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-1">
+              ৳{totalCollected.toLocaleString()}
+            </div>
           </div>
-          <div className="p-3 rounded-xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/30">
+          <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-400/10 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20 shadow-sm">
             <Wallet className="w-5 h-5" />
           </div>
         </div>
 
         {/* Member filter */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-center">
-          <label className="text-[11px] font-semibold text-slate-400 mb-1">Filter By Member:</label>
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-center">
+          <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Filter By Member:</label>
           <select
             value={filterMember}
             onChange={(e) => setFilterMember(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-brand-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:border-brand-500"
           >
             <option value="">All Members</option>
             {members.map((m) => (
@@ -180,12 +182,12 @@ export const DepositsPage: React.FC<{ selectedMonth: string }> = ({ selectedMont
         </div>
 
         {/* Payment method filter */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-center">
-          <label className="text-[11px] font-semibold text-slate-400 mb-1">Filter By Payment Channel:</label>
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-center">
+          <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Filter By Payment Channel:</label>
           <select
             value={filterMethod}
             onChange={(e) => setFilterMethod(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-brand-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:border-brand-500"
           >
             <option value="">All Methods</option>
             <option value="CASH">CASH</option>
@@ -197,10 +199,10 @@ export const DepositsPage: React.FC<{ selectedMonth: string }> = ({ selectedMont
       </div>
 
       {/* Table */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="py-3.5 px-4 font-bold">Payment Date</th>
                 <th className="py-3.5 px-4 font-bold">Member Name</th>

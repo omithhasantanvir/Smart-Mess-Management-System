@@ -147,41 +147,43 @@ export const HouseExpensesPage: React.FC<{ selectedMonth: string }> = ({ selecte
 
       {/* KPI banner */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-sky-950/30 border border-sky-900/50 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs text-sky-300 font-medium uppercase tracking-wider">
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Total House Bills in {selectedMonth}
             </div>
-            <div className="text-2xl font-black text-white mt-1">৳{totalExpenses.toLocaleString()}</div>
+            <div className="text-2xl font-bold font-mono text-sky-600 dark:text-sky-400 mt-1">
+              ৳{totalExpenses.toLocaleString()}
+            </div>
           </div>
-          <div className="p-3 rounded-xl bg-sky-600 text-white shadow-lg shadow-sky-600/30">
+          <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-400/10 text-sky-600 dark:text-sky-400 border border-sky-100 dark:border-sky-500/20 shadow-sm">
             <Home className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs text-slate-400 font-medium uppercase tracking-wider">Active Mess Members</div>
-            <div className="text-2xl font-black text-white mt-1">{members.length} Members</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Active Mess Members</div>
+            <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white mt-1">{members.length} Members</div>
           </div>
-          <div className="text-xs text-slate-400 text-right">
+          <div className="text-xs text-slate-500 dark:text-slate-400 text-right">
             Shared equally ~ <br />
-            <strong className="text-white font-mono">
+            <strong className="text-slate-800 dark:text-white font-mono">
               ৳{members.length > 0 ? Math.round(totalExpenses / members.length) : 0}
             </strong> / member
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs text-slate-400 font-medium uppercase tracking-wider">Allocation Method</div>
-            <div className="text-sm font-bold text-brand-400 mt-1">EQUAL / ACTIVE DAYS / CUSTOM</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Allocation Method</div>
+            <div className="text-xs font-bold text-brand-600 dark:text-brand-400 mt-1">EQUAL / ACTIVE DAYS / CUSTOM</div>
           </div>
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">

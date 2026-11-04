@@ -180,38 +180,38 @@ export const MonthlySettlementPage: React.FC<{ selectedMonth: string }> = ({ sel
       {/* KPI Overview Strip */}
       {settlement && (
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-          <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
-            <span className="text-[10px] font-bold uppercase text-slate-400">Mess Meals</span>
-            <div className="text-xl font-black text-amber-400 font-mono mt-0.5">{settlement.totalMessMeals}</div>
+          <div className="p-3.5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Mess Meals</span>
+            <div className="text-xl font-bold text-amber-600 dark:text-amber-400 font-mono mt-0.5">{settlement.totalMessMeals}</div>
           </div>
-          <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
-            <span className="text-[10px] font-bold uppercase text-slate-400">Total Bazar</span>
-            <div className="text-xl font-black text-purple-400 font-mono mt-0.5">৳{settlement.totalMarketCost}</div>
+          <div className="p-3.5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Total Bazar</span>
+            <div className="text-xl font-bold text-purple-600 dark:text-purple-400 font-mono mt-0.5">৳{settlement.totalMarketCost}</div>
           </div>
-          <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
-            <span className="text-[10px] font-bold uppercase text-slate-400">Mill Rate</span>
-            <div className="text-xl font-black text-brand-400 font-mono mt-0.5">৳{settlement.appliedMillRate.toFixed(2)}</div>
+          <div className="p-3.5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Mill Rate</span>
+            <div className="text-xl font-bold text-brand-600 dark:text-brand-400 font-mono mt-0.5">৳{settlement.appliedMillRate.toFixed(2)}</div>
           </div>
-          <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
-            <span className="text-[10px] font-bold uppercase text-slate-400">House Bills</span>
-            <div className="text-xl font-black text-sky-400 font-mono mt-0.5">৳{settlement.totalSharedExpenses}</div>
+          <div className="p-3.5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">House Bills</span>
+            <div className="text-xl font-bold text-sky-600 dark:text-sky-400 font-mono mt-0.5">৳{settlement.totalSharedExpenses}</div>
           </div>
-          <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
-            <span className="text-[10px] font-bold uppercase text-slate-400">Cook Salary</span>
-            <div className="text-xl font-black text-amber-300 font-mono mt-0.5">৳{settlement.totalCookBill}</div>
+          <div className="p-3.5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Cook Salary</span>
+            <div className="text-xl font-bold text-amber-600 dark:text-amber-300 font-mono mt-0.5">৳{settlement.totalCookBill}</div>
           </div>
-          <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
-            <span className="text-[10px] font-bold uppercase text-slate-400">Total Deposits</span>
-            <div className="text-xl font-black text-emerald-400 font-mono mt-0.5">৳{settlement.totalDeposits}</div>
+          <div className="p-3.5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Total Deposits</span>
+            <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 font-mono mt-0.5">৳{settlement.totalDeposits}</div>
           </div>
         </div>
       )}
 
       {/* Main Settlement Table (Exactly matching user prompt requirements) */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+      <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950 text-slate-300 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 uppercase text-[10px] tracking-wider border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="py-3.5 px-4 font-bold">Member Name</th>
                 <th className="py-3.5 px-4 font-bold text-center">Total Meals</th>
