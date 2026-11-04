@@ -170,29 +170,29 @@ export const ReportsPage: React.FC<{ selectedMonth: string }> = ({ selectedMonth
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Financial Reports & Exports</h1>
-          <p className="text-xs sm:text-sm text-slate-400">
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Financial Reports &amp; Exports</h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             Generate and export statements in Excel (.xlsx), PDF, and CSV formats
           </p>
         </div>
       </div>
 
       {/* Filter and selector card */}
-      <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-        <h3 className="text-sm font-bold text-white flex items-center gap-2">
-          <Filter className="w-4 h-4 text-brand-400" />
+      <div className="p-5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <Filter className="w-4 h-4 text-brand-600 dark:text-brand-400" />
           Report Parameters
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div>
-            <label className="block text-slate-400 font-semibold mb-1">Select Report Type</label>
+            <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Select Report Type</label>
             <select
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-brand-500 font-medium"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 font-medium"
             >
               <option value="SETTLEMENT">Monthly Financial Settlement Report</option>
               <option value="MARKET">Daily Market / Bazar Expenses Report</option>
@@ -201,21 +201,21 @@ export const ReportsPage: React.FC<{ selectedMonth: string }> = ({ selectedMonth
           </div>
 
           <div>
-            <label className="block text-slate-400 font-semibold mb-1">Billing Month</label>
+            <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Billing Month</label>
             <input
               type="month"
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-brand-500 font-mono"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 font-mono"
             />
           </div>
 
           <div>
-            <label className="block text-slate-400 font-semibold mb-1">Member (Optional)</label>
+            <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Member (Optional)</label>
             <select
               value={selectedMember}
               onChange={(e) => setSelectedMember(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-brand-500"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-brand-500"
             >
               <option value="">All Members</option>
               {members.map((m) => (
@@ -228,7 +228,7 @@ export const ReportsPage: React.FC<{ selectedMonth: string }> = ({ selectedMonth
         </div>
 
         {/* Export buttons row */}
-        <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center gap-3">
+        <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center gap-3">
           <button
             onClick={handleExportExcel}
             disabled={loading}
@@ -250,9 +250,9 @@ export const ReportsPage: React.FC<{ selectedMonth: string }> = ({ selectedMonth
           <button
             onClick={handleExportCSV}
             disabled={loading}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold border border-slate-200 dark:border-slate-700 transition disabled:opacity-50"
           >
-            <Download className="w-4 h-4 text-brand-400" />
+            <Download className="w-4 h-4 text-brand-600 dark:text-brand-400" />
             <span>Download CSV</span>
           </button>
         </div>
@@ -260,4 +260,3 @@ export const ReportsPage: React.FC<{ selectedMonth: string }> = ({ selectedMonth
     </div>
   );
 };
-

@@ -25,7 +25,18 @@ const PORT = process.env.PORT || 5000;
 
 // Security & Middlewares
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-app.use(cors({ origin: '*', credentials: true }));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. mobile apps, curl) or any vercel / localhost origin
+      if (!origin || origin.includes('localhost') || origin.endsWith('.vercel.app') || origin === process.env.CLIENT_URL) {
+        return callback(null, true);
+      }
+      return callback(null, true); // Allow all valid web clients
+    },
+    credentials: true
+  })
+);
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 

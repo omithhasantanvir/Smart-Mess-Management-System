@@ -62,95 +62,95 @@ export const SettingsPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-4xl">
       {/* Header */}
-      <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+      <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">System & Mess Settings</h1>
-          <p className="text-xs sm:text-sm text-slate-400">
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">System &amp; Mess Settings</h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             Configure mess identity, Bangladeshi Taka currency, meal multipliers, and accounting rules
           </p>
         </div>
       </div>
 
       {savedSuccess && (
-        <div className="p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-800 text-emerald-200 text-xs flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+        <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-200 text-xs flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
           <span>Mess configuration updated successfully.</span>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6 text-xs">
         {/* Mess Details Card */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <Building className="w-4 h-4 text-brand-400" />
-            Mess Identity & Manager Contact
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Building className="w-4 h-4 text-brand-600 dark:text-brand-400" />
+            Mess Identity &amp; Manager Contact
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Mess / Hostel Name</label>
+              <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Mess / Hostel Name</label>
               <input
                 type="text"
                 required
                 value={settings.messName}
                 onChange={(e) => setSettings({ ...settings, messName: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-brand-500 font-semibold"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 font-semibold"
               />
             </div>
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Manager Name</label>
+              <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Manager Name</label>
               <input
                 type="text"
                 required
                 value={settings.managerName}
                 onChange={(e) => setSettings({ ...settings, managerName: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-brand-500"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-brand-500"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Manager Phone Number</label>
+              <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Manager Phone Number</label>
               <input
                 type="text"
                 value={settings.contactNumber}
                 onChange={(e) => setSettings({ ...settings, contactNumber: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-brand-500 font-mono"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 font-mono"
               />
             </div>
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Mess Full Address</label>
+              <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Mess Full Address</label>
               <input
                 type="text"
                 value={settings.address}
                 onChange={(e) => setSettings({ ...settings, address: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-brand-500"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-brand-500"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-slate-400 font-semibold mb-1">Currency Symbol</label>
+            <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Currency Symbol</label>
             <input
               type="text"
               value={settings.currencySymbol || '৳'}
               onChange={(e) => setSettings({ ...settings, currencySymbol: e.target.value })}
-              className="w-24 px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-brand-400 font-bold text-center focus:outline-none"
+              className="w-24 px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-brand-600 dark:text-brand-400 font-bold text-center focus:outline-none"
             />
           </div>
         </div>
 
         {/* Meal Weight Multipliers */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-amber-400" />
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Sliders className="w-4 h-4 text-amber-500 dark:text-amber-400" />
             Standard Meal Weight Multipliers
           </h3>
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Breakfast Multiplier</label>
+              <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Breakfast Multiplier</label>
               <input
                 type="number"
                 step="0.1"
@@ -165,11 +165,11 @@ export const SettingsPage: React.FC = () => {
                     }
                   })
                 }
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white font-mono text-center focus:outline-none"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white font-mono text-center focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Lunch Multiplier</label>
+              <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Lunch Multiplier</label>
               <input
                 type="number"
                 step="0.1"
@@ -184,11 +184,11 @@ export const SettingsPage: React.FC = () => {
                     }
                   })
                 }
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white font-mono text-center focus:outline-none"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white font-mono text-center focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Dinner Multiplier</label>
+              <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">Dinner Multiplier</label>
               <input
                 type="number"
                 step="0.1"
@@ -203,7 +203,7 @@ export const SettingsPage: React.FC = () => {
                     }
                   })
                 }
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white font-mono text-center focus:outline-none"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white font-mono text-center focus:outline-none"
               />
             </div>
           </div>
@@ -224,4 +224,3 @@ export const SettingsPage: React.FC = () => {
     </div>
   );
 };
-

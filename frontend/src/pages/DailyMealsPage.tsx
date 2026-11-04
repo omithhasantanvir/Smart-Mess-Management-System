@@ -129,20 +129,20 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Daily Meal Management</h1>
-          <p className="text-xs sm:text-sm text-slate-400">
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Daily Meal Management</h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             Multi-member daily meal entries, automatic meal calculations, and monthly matrix
           </p>
         </div>
 
         {/* View mode toggle */}
-        <div className="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
           <button
             onClick={() => setViewMode('DAILY')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-              viewMode === 'DAILY' ? 'bg-brand-600 text-white' : 'text-slate-400 hover:text-white'
+              viewMode === 'DAILY' ? 'bg-brand-600 text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Daily Entry Sheet
@@ -150,7 +150,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
           <button
             onClick={() => setViewMode('MONTHLY_MATRIX')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
-              viewMode === 'MONTHLY_MATRIX' ? 'bg-brand-600 text-white' : 'text-slate-400 hover:text-white'
+              viewMode === 'MONTHLY_MATRIX' ? 'bg-brand-600 text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <TableIcon className="w-3.5 h-3.5" />
@@ -160,14 +160,14 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
       </div>
 
       {isLocked && (
-        <div className="p-3 rounded-xl bg-amber-950/50 border border-amber-800 text-amber-200 text-xs flex items-center gap-2">
+        <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-200 text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
           <span>This month is LOCKED and finalized. Meal entries cannot be edited unless reopened by an Admin.</span>
         </div>
       )}
 
       {successMsg && (
-        <div className="p-3 rounded-xl bg-emerald-950/50 border border-emerald-800 text-emerald-200 text-xs flex items-center gap-2">
+        <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-200 text-xs flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
           <span>{successMsg}</span>
         </div>
@@ -176,23 +176,23 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
       {viewMode === 'DAILY' ? (
         <>
           {/* Date Selector & Quick Controls */}
-          <div className="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 w-full md:w-auto">
               <button
                 onClick={() => setSelectedDate(format(subDays(new Date(selectedDate), 1), 'yyyy-MM-dd'))}
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300"
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300"
                 title="Previous Day"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
 
-              <div className="flex items-center gap-2 bg-slate-950 px-3.5 py-2 rounded-xl border border-slate-800 text-xs sm:text-sm font-semibold">
+              <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-semibold">
                 <Calendar className="w-4 h-4 text-brand-400" />
                 <input
                   type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="bg-transparent text-white focus:outline-none cursor-pointer"
+                  className="bg-transparent text-slate-900 dark:text-white focus:outline-none cursor-pointer"
                 />
               </div>
 
@@ -212,7 +212,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                 type="button"
                 onClick={() => handleSetStandardAll(1, 1, 1)}
                 disabled={isLocked}
-                className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 text-xs font-medium border border-slate-700 disabled:opacity-50"
+                className="px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 disabled:opacity-50"
               >
                 Full Day (1-1-1)
               </button>
@@ -220,7 +220,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                 type="button"
                 onClick={() => handleSetStandardAll(0, 1, 1)}
                 disabled={isLocked}
-                className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 text-xs font-medium border border-slate-700 disabled:opacity-50"
+                className="px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 disabled:opacity-50"
               >
                 Lunch+Dinner (0-1-1)
               </button>
@@ -228,7 +228,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                 type="button"
                 onClick={() => handleSetStandardAll(0, 0, 0)}
                 disabled={isLocked}
-                className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 text-xs font-medium border border-slate-700 disabled:opacity-50"
+                className="px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 disabled:opacity-50"
               >
                 Off All (0-0-0)
               </button>
@@ -246,10 +246,10 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
           </div>
 
           {/* Daily Multi-member Entry Table */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+          <div className="bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+                <thead className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-200 dark:border-slate-800">
                   <tr>
                     <th className="py-3.5 px-4 font-bold">Code</th>
                     <th className="py-3.5 px-4 font-bold">Member Name</th>
@@ -261,7 +261,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                     <th className="py-3.5 px-4 font-bold">Notes</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                   {loading ? (
                     <tr>
                       <td colSpan={8} className="py-8 text-center text-slate-500">
@@ -277,9 +277,9 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                     </tr>
                   ) : (
                     rows.map((r) => (
-                      <tr key={r.memberId} className="hover:bg-slate-800/40 transition">
-                        <td className="py-2.5 px-4 font-mono font-bold text-brand-400">{r.memberCode}</td>
-                        <td className="py-2.5 px-4 font-semibold text-slate-100">{r.memberName}</td>
+                      <tr key={r.memberId} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+                        <td className="py-2.5 px-4 font-mono font-bold text-brand-600 dark:text-brand-400">{r.memberCode}</td>
+                        <td className="py-2.5 px-4 font-semibold text-slate-900 dark:text-slate-100">{r.memberName}</td>
 
                         {/* Breakfast input */}
                         <td className="py-2 px-4 text-center">
@@ -291,7 +291,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                             disabled={isLocked}
                             value={r.breakfast}
                             onChange={(e) => handleInputChange(r.memberId, 'breakfast', parseFloat(e.target.value) || 0)}
-                            className="w-16 py-1 px-2 text-center bg-slate-950 border border-slate-800 rounded-lg text-white font-mono font-bold focus:outline-none focus:border-brand-500"
+                            className="w-16 py-1 px-2 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white font-mono font-bold focus:outline-none focus:border-brand-500"
                           />
                         </td>
 
@@ -305,7 +305,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                             disabled={isLocked}
                             value={r.lunch}
                             onChange={(e) => handleInputChange(r.memberId, 'lunch', parseFloat(e.target.value) || 0)}
-                            className="w-16 py-1 px-2 text-center bg-slate-950 border border-slate-800 rounded-lg text-white font-mono font-bold focus:outline-none focus:border-brand-500"
+                            className="w-16 py-1 px-2 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white font-mono font-bold focus:outline-none focus:border-brand-500"
                           />
                         </td>
 
@@ -319,7 +319,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                             disabled={isLocked}
                             value={r.dinner}
                             onChange={(e) => handleInputChange(r.memberId, 'dinner', parseFloat(e.target.value) || 0)}
-                            className="w-16 py-1 px-2 text-center bg-slate-950 border border-slate-800 rounded-lg text-white font-mono font-bold focus:outline-none focus:border-brand-500"
+                            className="w-16 py-1 px-2 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white font-mono font-bold focus:outline-none focus:border-brand-500"
                           />
                         </td>
 
@@ -333,13 +333,13 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                             disabled={isLocked}
                             value={r.guestMeal}
                             onChange={(e) => handleInputChange(r.memberId, 'guestMeal', parseInt(e.target.value) || 0)}
-                            className="w-16 py-1 px-2 text-center bg-slate-950 border border-slate-800 rounded-lg text-white font-mono font-bold focus:outline-none focus:border-brand-500"
+                            className="w-16 py-1 px-2 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white font-mono font-bold focus:outline-none focus:border-brand-500"
                           />
                         </td>
 
                         {/* Row total meals */}
                         <td className="py-2 px-4 text-center">
-                          <span className="font-mono font-bold text-sm text-brand-400 bg-brand-950/60 border border-brand-800/40 px-2.5 py-1 rounded-lg inline-block min-w-10">
+                          <span className="font-mono font-bold text-sm text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/60 border border-brand-200 dark:border-brand-800/40 px-2.5 py-1 rounded-lg inline-block min-w-10">
                             {r.totalMeals}
                           </span>
                         </td>
@@ -355,7 +355,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                               const val = e.target.value;
                               setRows(prev => prev.map(item => item.memberId === r.memberId ? { ...item, notes: val } : item));
                             }}
-                            className="w-full py-1 px-2 bg-slate-950 border border-slate-800 rounded-lg text-slate-300 text-xs focus:outline-none focus:border-brand-500"
+                            className="w-full py-1 px-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-700 dark:text-slate-300 text-xs focus:outline-none focus:border-brand-500"
                           />
                         </td>
                       </tr>
@@ -364,7 +364,7 @@ export const DailyMealsPage: React.FC<{ selectedMonth: string }> = ({ selectedMo
                 </tbody>
 
                 {/* Footer Total */}
-                <tfoot className="bg-slate-950 font-bold border-t-2 border-slate-800 text-slate-300">
+                <tfoot className="bg-slate-50 dark:bg-slate-950 font-bold border-t-2 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
                   <tr>
                     <td colSpan={2} className="py-3 px-4 uppercase text-xs tracking-wider">
                       Mess Daily Total

@@ -85,26 +85,26 @@ export const UsersPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">User Accounts & Roles</h1>
-          <p className="text-xs sm:text-sm text-slate-400">
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">User Accounts &amp; Roles</h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             Manage authentication accounts, assign ADMIN, MANAGER, or MEMBER permissions
           </p>
         </div>
         <button
           onClick={fetchUsers}
-          className="p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white"
+          className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700"
         >
           <RefreshCw className="w-4 h-4" />
         </button>
       </div>
 
       {/* Table */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-white dark:bg-[#131d33] border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="py-3.5 px-4 font-bold">User Name</th>
                 <th className="py-3.5 px-4 font-bold">Email Address</th>
@@ -114,7 +114,7 @@ export const UsersPage: React.FC = () => {
                 <th className="py-3.5 px-4 font-bold text-center">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {loading ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-slate-500">
@@ -128,14 +128,14 @@ export const UsersPage: React.FC = () => {
                   const linkedCode = typeof u.memberId === 'object' ? (u.memberId as any)?.memberCode : null;
 
                   return (
-                    <tr key={u._id} className="hover:bg-slate-800/40 transition">
-                      <td className="py-3 px-4 font-semibold text-slate-100">{u.name}</td>
-                      <td className="py-3 px-4 text-slate-300 font-mono">{u.email}</td>
+                    <tr key={u._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+                      <td className="py-3 px-4 font-semibold text-slate-900 dark:text-slate-100">{u.name}</td>
+                      <td className="py-3 px-4 text-slate-600 dark:text-slate-300 font-mono">{u.email}</td>
                       <td className="py-3 px-4">
                         <select
                           value={u.role}
                           onChange={(e) => handleRoleChange(u._id, e.target.value)}
-                          className="px-2.5 py-1 bg-slate-950 border border-slate-800 rounded-lg text-xs font-bold text-brand-400 focus:outline-none"
+                          className="px-2.5 py-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-bold text-brand-600 dark:text-brand-400 focus:outline-none"
                         >
                           <option value="ADMIN">ADMIN</option>
                           <option value="MANAGER">MANAGER</option>
@@ -144,11 +144,11 @@ export const UsersPage: React.FC = () => {
                       </td>
                       <td className="py-3 px-4">
                         {linkedName ? (
-                          <span className="font-semibold text-slate-300">
+                          <span className="font-semibold text-slate-700 dark:text-slate-300">
                             {linkedName} ({linkedCode})
                           </span>
                         ) : (
-                          <span className="text-slate-500 italic">Not linked</span>
+                          <span className="text-slate-400 italic">Not linked</span>
                         )}
                       </td>
                       <td className="py-3 px-4 text-center">
@@ -156,8 +156,8 @@ export const UsersPage: React.FC = () => {
                           onClick={() => handleToggleActive(u._id, u.isActive)}
                           className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                             u.isActive
-                              ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/60'
-                              : 'bg-rose-950 text-rose-400 border border-rose-800/60'
+                              ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60'
+                              : 'bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60'
                           }`}
                         >
                           {u.isActive ? 'ACTIVE' : 'DEACTIVATED'}
@@ -166,9 +166,9 @@ export const UsersPage: React.FC = () => {
                       <td className="py-3 px-4 text-center">
                         <button
                           onClick={() => setResetModalUser(u)}
-                          className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold border border-slate-700 flex items-center gap-1 mx-auto"
+                          className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-semibold border border-slate-200 dark:border-slate-700 flex items-center gap-1 mx-auto"
                         >
-                          <Key className="w-3 h-3 text-amber-400" />
+                          <Key className="w-3 h-3 text-amber-500 dark:text-amber-400" />
                           <span>Reset Password</span>
                         </button>
                       </td>
@@ -184,17 +184,17 @@ export const UsersPage: React.FC = () => {
       {/* Password reset dialog */}
       {resetModalUser && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm shadow-2xl p-5 text-xs">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
-              <h3 className="font-bold text-white text-sm">Reset Password for {resetModalUser.name}</h3>
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-sm shadow-2xl p-5 text-xs">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
+              <h3 className="font-bold text-slate-900 dark:text-white text-sm">Reset Password for {resetModalUser.name}</h3>
               <button onClick={() => setResetModalUser(null)}>
-                <X className="w-4 h-4 text-slate-400" />
+                <X className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               </button>
             </div>
 
             <form onSubmit={handleResetPasswordSubmit} className="space-y-4">
               <div>
-                <label className="block text-slate-400 font-semibold mb-1">New Password (min 6 chars)</label>
+                <label className="block text-slate-600 dark:text-slate-400 font-semibold mb-1">New Password (min 6 chars)</label>
                 <input
                   type="password"
                   required
@@ -202,7 +202,7 @@ export const UsersPage: React.FC = () => {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none"
                 />
               </div>
 
@@ -210,7 +210,7 @@ export const UsersPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setResetModalUser(null)}
-                  className="px-3 py-1.5 bg-slate-800 text-slate-300 rounded-xl"
+                  className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl border border-slate-200 dark:border-slate-700"
                 >
                   Cancel
                 </button>
@@ -229,4 +229,3 @@ export const UsersPage: React.FC = () => {
     </div>
   );
 };
-

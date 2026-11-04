@@ -1,0 +1,241 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  MEMBER
+}
+
+enum MemberStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum MonthStatus {
+  OPEN
+  CLOSED
+  LOCKED
+}
+
+enum ExpenseCategory {
+  HOUSE_RENT
+  ELECTRICITY
+  GAS
+  WATER
+  WIFI
+  SECURITY
+  CLEANER
+  COOK_BUA
+  OTHER
+}
+
+enum SharingMethod {
+  EQUAL
+  ACTIVE_DAYS
+  CUSTOM
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole @default(MEMBER)
+  memberId  String?  @unique
+  member    Member?  @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  avatar    String?  @default("")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  createdMeals       Meal[]
+  createdDeposits    Deposit[]
+  createdMarkets     MarketTransaction[]
+  createdExpenses    Expense[]
+  closedSettlements  MonthlySettlement[]
+  auditLogs          AuditLog[]
+
+  @@map("users")
+}
+
+model Member {
+  id               String       @id @default(cuid())
+  memberCode       String       @unique
+  name             String
+  phone            String
+  email            String?
+  address          String?      @default("")
+  emergencyContact String?      @default("")
+  roomNumber       String?      @default("")
+  joiningDate      DateTime     @default(now())
+  leavingDate      DateTime?
+  status           MemberStatus @default(ACTIVE)
+  currentBalance   Float        @default(0)
+  notes            String?      @default("")
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  user               User?
+  meals              Meal[]
+  deposits           Deposit[]
+  marketTransactions MarketTransaction[]
+  paidExpenses       Expense[]
+
+  @@map("members")
+}
+
+model Meal {
+  id         String   @id @default(cuid())
+  memberId   String
+  member     Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  date       String   // YYYY-MM-DD
+  month      String   // YYYY-MM
+  breakfast  Float    @default(0)
+  lunch      Float    @default(0)
+  dinner     Float    @default(0)
+  guestMeal  Float    @default(0)
+  totalMeals Float    @default(0)
+  notes      String?  @default("")
+  createdById String?
+  createdBy  User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([memberId, date])
+  @@index([date])
+  @@index([month])
+  @@map("meals")
+}
+
+model Deposit {
+  id            String   @id @default(cuid())
+  memberId      String
+  member        Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  date          String   // YYYY-MM-DD
+  month         String   // YYYY-MM
+  amount        Float
+  paymentMethod String   @default("CASH") // CASH, BKASH, NAGAD, BANK
+  transactionId String?  @default("")
+  receiptImage  String?  @default("")
+  notes         String?  @default("")
+  createdById   String?
+  createdBy     User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([date])
+  @@index([month])
+  @@map("deposits")
+}
+
+model MarketTransaction {
+  id            String   @id @default(cuid())
+  date          String   // YYYY-MM-DD
+  month         String   // YYYY-MM
+  purchasedById String
+  purchasedBy   Member   @relation(fields: [purchasedById], references: [id], onDelete: Cascade)
+  items         Json?    // Array of IMarketItem
+  totalAmount   Float
+  category      String   @default("GROCERY")
+  paymentMethod String   @default("CASH")
+  receiptImage  String?  @default("")
+  notes         String?  @default("")
+  createdById   String?
+  createdBy     User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([date])
+  @@index([month])
+  @@map("market_transactions")
+}
+
+model Expense {
+  id                String          @id @default(cuid())
+  title             String
+  category          ExpenseCategory
+  amount            Float
+  date              String          // YYYY-MM-DD
+  month             String          // YYYY-MM
+  paidById          String?
+  paidBy            Member?         @relation(fields: [paidById], references: [id], onDelete: SetNull)
+  sharingMethod     SharingMethod   @default(EQUAL)
+  allocations       Json?           // Array of { memberId, amount, activeDays, percentage }
+  includeInMealRate Boolean         @default(false)
+  receiptImage      String?         @default("")
+  description       String?         @default("")
+  createdById       String?
+  createdBy         User?           @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([date])
+  @@index([month])
+  @@index([category])
+  @@map("expenses")
+}
+
+model MessSettings {
+  id                            String   @id @default(cuid())
+  messName                      String   @default("Green View Smart Mess")
+  currencySymbol                String   @default("৳")
+  address                       String   @default("Sector 10, Uttara, Dhaka")
+  managerName                   String   @default("Tanvir")
+  contactNumber                 String   @default("+8801740721194")
+  defaultMealConfig             Json?    // { breakfastMultiplier: 0.5, lunchMultiplier: 1, dinnerMultiplier: 1 }
+  eligibleMealExpenseCategories Json?    // ['GROCERY', 'FISH_MEAT', 'VEGETABLES', 'SPICES', 'GAS_CYLINDER']
+  autoLockClosedMonths          Boolean  @default(true)
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
+
+  @@map("mess_settings")
+}
+
+model MonthlySettlement {
+  id                  String      @id @default(cuid())
+  month               String      @unique // YYYY-MM
+  status              MonthStatus @default(OPEN)
+  totalMembers        Int         @default(0)
+  totalMessMeals      Float       @default(0)
+  totalMarketCost     Float       @default(0)
+  eligibleMealExpenses Float      @default(0)
+  calculatedMillRate  Float       @default(0)
+  appliedMillRate     Float       @default(0)
+  totalSharedExpenses Float       @default(0)
+  totalCookBill       Float       @default(0)
+  totalDeposits       Float       @default(0)
+  totalMemberCosts    Float       @default(0)
+  totalCredits        Float       @default(0)
+  netMessBalance      Float       @default(0)
+  memberSettlements   Json?       // Array of member settlements
+  closedById          String?
+  closedBy            User?       @relation(fields: [closedById], references: [id], onDelete: SetNull)
+  closedAt            DateTime?
+  notes               String?     @default("")
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  @@map("monthly_settlements")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userName  String   @default("System")
+  action    String
+  module    String
+  details   Json?
+  ipAddress String?  @default("")
+  createdAt DateTime @default(now())
+
+  @@map("audit_logs")
+}
+
