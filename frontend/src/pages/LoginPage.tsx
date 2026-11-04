@@ -525,7 +525,7 @@ export const LoginPage: React.FC = () => {
         </div>
         <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
         <span className="font-semibold text-slate-700 dark:text-slate-300">
-          Develop by OH Tanvir @{new Date().getFullYear()}
+          Developed by OH Tanvir © {new Date().getFullYear()}
         </span>
       </footer>
     </div>
