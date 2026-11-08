@@ -1,0 +1,8 @@
+{
+	"appId": "com.smartmess.app",
+	"appName": "Smart Mess",
+	"webDir": "dist",
+	"server": {
+		"androidScheme": "https"
+	}
+}
