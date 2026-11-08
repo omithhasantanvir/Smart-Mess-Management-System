@@ -32,8 +32,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v4
+      - name: Accept Android SDK Licenses
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || yes | sdkmanager --licenses || true
 
       - name: Make Gradlew Executable
         run: chmod +x frontend/android/gradlew
@@ -41,7 +42,11 @@ jobs:
       - name: Build Android APK
         run: |
           cd frontend/android
-          ./gradlew assembleDebug --stacktrace --no-daemon
+          ./gradlew assembleDebug --stacktrace --no-daemon 2>&1 | tee gradle_output.txt || {
+            echo "===== GRADLE ERROR LOG ====="
+            tail -n 150 gradle_output.txt
+            exit 1
+          }
 
       - name: Prepare APK Output
         run: |
