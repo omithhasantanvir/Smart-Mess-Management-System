@@ -27,8 +27,7 @@
     ],
     "win": {
       "target": [
-        "nsis",
-        "portable"
+        "nsis"
       ]
     },
     "nsis": {

@@ -12,6 +12,9 @@ jobs:
   build-android:
     name: Build Android APK
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -33,38 +36,32 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Frontend Dependencies
-        run: |
-          cd frontend
-          npm install
+        run: npm install
 
       - name: Build Web Frontend
-        run: |
-          cd frontend
-          npm run build
+        run: npm run build
 
       - name: Sync Capacitor Android
-        run: |
-          cd frontend
-          npx cap sync android
+        run: npx --yes @capacitor/cli sync android
 
       - name: Make Gradlew Executable
-        run: chmod +x frontend/android/gradlew
+        run: chmod +x android/gradlew
 
       - name: Build Android APK
-        run: |
-          cd frontend/android
-          ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace
+        working-directory: frontend/android
 
       - name: Prepare APK Output
         run: |
-          mkdir -p output
-          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk output/SmartMess.apk
+          mkdir -p ../output
+          cp app/build/outputs/apk/debug/app-debug.apk ../output/SmartMess.apk
+        working-directory: frontend/android
 
       - name: Upload Android APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: SmartMess-Android-APK
-          path: output/SmartMess.apk
+          path: frontend/output/SmartMess.apk
           if-no-files-found: error
 
   build-windows:
@@ -72,6 +69,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
+        working-directory: frontend
         shell: bash
     steps:
       - name: Checkout Repository
@@ -85,14 +83,15 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install Frontend Dependencies
-        run: |
-          cd frontend
-          npm install
+        run: npm install
+
+      - name: Build Web Frontend
+        run: npm run build
 
       - name: Build Windows Desktop App
-        run: |
-          cd frontend
-          npm run electron:build
+        run: npx electron-builder --win nsis --x64 --publish never
+        env:
+          DEBUG: electron-builder
 
       - name: Upload Windows EXE Artifact
         uses: actions/upload-artifact@v4
@@ -132,7 +131,7 @@ jobs:
             ### 📱 Smart Mess Management System - Official Downloads
             
             - **Android Mobile App:** Download and install `SmartMess.apk` on any Android device.
-            - **Windows Desktop App:** Download and run `Smart Mess Management System Setup 1.0.0.exe` or portable `.exe` on Windows PC.
+            - **Windows Desktop App:** Download and run `Smart Mess Management System Setup 1.0.0.exe` on Windows PC.
             - **Connected Database:** Neon PostgreSQL Cloud Database
             - **Live Web Portal:** [https://smartmess-system.vercel.app](https://smartmess-system.vercel.app)
             
