@@ -31,3 +31,4 @@ if exist "%ProgramFiles%\Microsoft\Edge\Application\msedge.exe" (
 :: Fallback default browser
 start "" "https://smartmess-system.vercel.app"
 exit /b
+

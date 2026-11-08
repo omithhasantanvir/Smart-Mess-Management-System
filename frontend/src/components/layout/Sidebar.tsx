@@ -114,8 +114,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Brand header */}
         <div className="h-16 flex items-center justify-between px-5 border-b border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0f192e]">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md">
-              <UtensilsCrossed className="w-5 h-5" />
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl blur-sm opacity-40 group-hover:opacity-75 transition duration-300" />
+              <div className="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/25 ring-2 ring-white/90 dark:ring-slate-700">
+                <UtensilsCrossed className="w-5 h-5" />
+              </div>
             </div>
             <div>
               <div className="flex items-center gap-1.5">

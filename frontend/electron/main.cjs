@@ -83,6 +83,7 @@ async function createWindow() {
     minWidth: 900,
     minHeight: 600,
     title: 'Smart Mess Management System',
+    icon: path.join(__dirname, '../public/icon.png'),
     backgroundColor: '#0f172a',
     autoHideMenuBar: true,
     webPreferences: {
