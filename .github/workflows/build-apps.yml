@@ -51,7 +51,9 @@ jobs:
       - name: Prepare APK Output
         run: |
           mkdir -p output
-          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk output/SmartMess.apk
+          find frontend/android -name "*.apk"
+          find frontend/android -name "*.apk" -exec cp {} output/SmartMess.apk \;
+          ls -lh output/SmartMess.apk
 
       - name: Upload Android APK Artifact
         uses: actions/upload-artifact@v4
