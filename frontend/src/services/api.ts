@@ -1,4 +1,5 @@
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '') + '/api';
+const LIVE_API_URL = 'https://smartmess-api.vercel.app';
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || LIVE_API_URL).replace(/\/$/, '') + '/api';
 
 function getAuthHeader(): HeadersInit {
   const token = localStorage.getItem('smart_mess_token');

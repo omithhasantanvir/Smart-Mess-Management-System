@@ -1,0 +1,137 @@
+name: Build Android APK and Windows EXE
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build Web Frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Sync Capacitor Android
+        run: |
+          cd frontend
+          npx cap sync android
+
+      - name: Make Gradlew Executable
+        run: chmod +x frontend/android/gradlew
+
+      - name: Build Android APK
+        run: |
+          cd frontend/android
+          ./gradlew assembleDebug --stacktrace
+
+      - name: Prepare APK Output
+        run: |
+          mkdir -p output
+          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk output/SmartMess.apk
+
+      - name: Upload Android APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmartMess-Android-APK
+          path: output/SmartMess.apk
+          if-no-files-found: error
+
+  build-windows:
+    name: Build Windows EXE
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build Windows Desktop App
+        run: |
+          cd frontend
+          npm run electron:build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Windows EXE Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmartMess-Windows-EXE
+          path: frontend/dist_electron/*.exe
+          if-no-files-found: error
+
+  create-release:
+    name: Create GitHub Release
+    needs: [build-android, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Android Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: SmartMess-Android-APK
+          path: release_files
+
+      - name: Download Windows Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: SmartMess-Windows-EXE
+          path: release_files
+
+      - name: Create GitHub Release with APK and EXE
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+        with:
+          tag_name: v1.0.0-${{ github.run_number }}
+          name: Smart Mess Management System v1.0.0 (Release #${{ github.run_number }})
+          body: |
+            ### 📱 Smart Mess Management System - Official Downloads
+            
+            - **Android Mobile App:** Download and install `SmartMess.apk` on any Android device.
+            - **Windows Desktop App:** Download and run `Smart Mess Management System Setup 1.0.0.exe` or portable `.exe` on Windows PC.
+            - **Connected Database:** Neon PostgreSQL Cloud Database
+            - **Live Web Portal:** [https://smartmess-system.vercel.app](https://smartmess-system.vercel.app)
+            
+            Developed by OH Tanvir © 2026
+          files: release_files/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

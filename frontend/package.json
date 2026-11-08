@@ -2,13 +2,45 @@
   "name": "smart-mess-frontend",
   "private": true,
   "version": "1.0.0",
+  "description": "Smart Mess Management System Desktop Application",
+  "author": "OH Tanvir",
   "type": "module",
+  "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron:dev": "electron electron/main.cjs",
+    "electron:build": "tsc && vite build && electron-builder --win --x64",
+    "cap:sync": "tsc && vite build && cap sync android"
+  },
+  "build": {
+    "appId": "com.smartmess.desktop",
+    "productName": "Smart Mess Management System",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Smart Mess"
+    }
   },
   "dependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/core": "^8.6.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "jspdf": "^2.5.1",
@@ -19,10 +51,13 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.6.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
+    "electron": "^45.2.3",
+    "electron-builder": "^26.18.0",
     "postcss": "^8.4.38",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -31,4 +66,3 @@
     "vite": "^5.2.11"
   }
 }
-

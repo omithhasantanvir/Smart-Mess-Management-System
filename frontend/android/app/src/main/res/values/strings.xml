@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Smart Mess</string>
+    <string name="title_activity_main">Smart Mess</string>
+    <string name="package_name">com.smartmess.app</string>
+    <string name="custom_url_scheme">com.smartmess.app</string>
+</resources>

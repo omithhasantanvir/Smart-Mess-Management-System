@@ -108,9 +108,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar container */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-[#0d1527] border-r border-slate-200 dark:border-slate-800/80 flex flex-col transition-all duration-200 ease-in-out shadow-xl ${
-          isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        }`}
+        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-[#0d1527] border-r border-slate-200 dark:border-slate-800/80 flex flex-col transition-all duration-200 ease-in-out shadow-xl ${isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          }`}
       >
         {/* Brand header */}
         <div className="h-16 flex items-center justify-between px-5 border-b border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0f192e]">
@@ -158,17 +157,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <button
                       key={item.key}
                       onClick={() => handleSelect(item.key as NavItemKey)}
-                      className={`w-full group flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                        isActive
+                      className={`w-full group flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${isActive
                           ? 'bg-brand-600 text-white shadow-md shadow-brand-500/25 dark:bg-brand-600 dark:text-white'
                           : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-2.5">
                         <Icon
-                          className={`w-4 h-4 transition-colors ${
-                            isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200'
-                          }`}
+                          className={`w-4 h-4 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200'
+                            }`}
                         />
                         <span>{item.label}</span>
                       </div>
@@ -193,9 +190,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </p>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span
-                  className={`inline-block px-1.5 py-0.2 rounded text-[9px] font-bold border uppercase tracking-wider ${
-                    roleColors[user?.role || 'MEMBER']
-                  }`}
+                  className={`inline-block px-1.5 py-0.2 rounded text-[9px] font-bold border uppercase tracking-wider ${roleColors[user?.role || 'MEMBER']
+                    }`}
                 >
                   {user?.role || 'MEMBER'}
                 </span>
