@@ -8,6 +8,7 @@ function createWindow() {
     minWidth: 900,
     minHeight: 600,
     title: 'Smart Mess Management System',
+    backgroundColor: '#0f172a',
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false,
@@ -19,8 +20,26 @@ function createWindow() {
   Menu.setApplicationMenu(null);
 
   const indexPath = path.join(__dirname, '../dist/index.html');
+
+  win.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.error('Page load failed, falling back to web portal:', errorCode, errorDescription);
+    win.loadURL('https://smartmess-system.vercel.app');
+  });
+
   win.loadFile(indexPath).catch(() => {
     win.loadURL('https://smartmess-system.vercel.app');
+  });
+
+  // Enable F12 and Ctrl+R for debugging and refresh
+  win.webContents.on('before-input-event', (event, input) => {
+    if (input.key === 'F12' || (input.control && input.shift && input.key.toLowerCase() === 'i')) {
+      win.webContents.toggleDevTools();
+      event.preventDefault();
+    }
+    if (input.key === 'F5' || (input.control && input.key.toLowerCase() === 'r')) {
+      win.webContents.reload();
+      event.preventDefault();
+    }
   });
 
   win.webContents.setWindowOpenHandler(({ url }) => {
