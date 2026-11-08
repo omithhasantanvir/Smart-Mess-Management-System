@@ -1,0 +1,19 @@
+{
+  "name": "Smart Mess Management System",
+  "short_name": "Smart Mess",
+  "description": "Smart daily meals, bazar ledger & finances management",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

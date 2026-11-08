@@ -13,8 +13,12 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
-    const saved = localStorage.getItem('smart_mess_theme');
-    if (saved === 'light' || saved === 'dark') return saved;
+    try {
+      const saved = localStorage.getItem('smart_mess_theme');
+      if (saved === 'light' || saved === 'dark') return saved;
+    } catch {
+      // Ignore security errors in restricted environments
+    }
     // Default to clean light mode as requested
     return 'light';
   });
@@ -28,7 +32,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       root.classList.add('light');
       root.classList.remove('dark');
     }
-    localStorage.setItem('smart_mess_theme', theme);
+    try {
+      localStorage.setItem('smart_mess_theme', theme);
+    } catch {
+      // Ignore
+    }
   }, [theme]);
 
   const toggleTheme = () => {

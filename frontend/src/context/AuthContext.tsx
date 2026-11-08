@@ -18,7 +18,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('smart_mess_token'));
+  const [token, setToken] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem('smart_mess_token');
+    } catch {
+      return null;
+    }
+  });
   const [loading, setLoading] = useState<boolean>(true);
 
   const refreshUser = async () => {
@@ -46,13 +52,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [token]);
 
   const login = (newToken: string, newUser: User) => {
-    localStorage.setItem('smart_mess_token', newToken);
+    try {
+      localStorage.setItem('smart_mess_token', newToken);
+    } catch {}
     setToken(newToken);
     setUser(newUser);
   };
 
   const logout = () => {
-    localStorage.removeItem('smart_mess_token');
+    try {
+      localStorage.removeItem('smart_mess_token');
+    } catch {}
     setToken(null);
     setUser(null);
   };

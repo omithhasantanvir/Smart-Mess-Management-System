@@ -2,8 +2,12 @@ const LIVE_API_URL = 'https://smartmess-api.vercel.app';
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || LIVE_API_URL).replace(/\/$/, '') + '/api';
 
 function getAuthHeader(): HeadersInit {
-  const token = localStorage.getItem('smart_mess_token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  try {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('smart_mess_token') : null;
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  } catch {
+    return {};
+  }
 }
 
 function cleanQuery(params?: Record<string, any>): string {
