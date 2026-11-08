@@ -26,11 +26,11 @@ jobs:
           cd frontend
           npm install --ignore-scripts
 
-      - name: Setup Java JDK 17
+      - name: Setup Java JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       - name: Accept Android SDK Licenses
         run: |
@@ -42,17 +42,12 @@ jobs:
       - name: Build Android APK
         run: |
           cd frontend/android
-          ./gradlew assembleDebug --stacktrace --no-daemon 2>&1 | tee gradle_output.txt || {
-            echo "===== GRADLE ERROR LOG ====="
-            tail -n 150 gradle_output.txt
-            exit 1
-          }
+          ./gradlew assembleDebug --stacktrace --no-daemon
 
       - name: Prepare APK Output
         run: |
           mkdir -p output
-          find frontend/android -name "*.apk"
-          find frontend/android -name "*.apk" -exec cp {} output/SmartMess.apk \;
+          find frontend/android/app/build/outputs/apk -name "*.apk" -exec cp {} output/SmartMess.apk \;
           ls -lh output/SmartMess.apk
 
       - name: Upload Android APK Artifact
