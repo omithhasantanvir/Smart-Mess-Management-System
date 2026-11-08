@@ -11,12 +11,13 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "electron:dev": "electron electron/main.cjs",
-    "electron:build": "tsc && vite build && electron-builder --win --x64",
+    "electron:build": "tsc && vite build && electron-builder --win --x64 --publish never",
     "cap:sync": "tsc && vite build && cap sync android"
   },
   "build": {
     "appId": "com.smartmess.desktop",
     "productName": "Smart Mess Management System",
+    "publish": null,
     "directories": {
       "output": "dist_electron"
     },

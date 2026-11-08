@@ -30,7 +30,7 @@ jobs:
           java-version: '17'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Install Frontend Dependencies
         run: |
@@ -70,6 +70,9 @@ jobs:
   build-windows:
     name: Build Windows EXE
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -90,8 +93,6 @@ jobs:
         run: |
           cd frontend
           npm run electron:build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Windows EXE Artifact
         uses: actions/upload-artifact@v4
@@ -104,14 +105,19 @@ jobs:
     name: Create GitHub Release
     needs: [build-android, build-windows]
     runs-on: ubuntu-latest
+    if: always() && (needs.build-android.result == 'success' || needs.build-windows.result == 'success')
+    permissions:
+      contents: write
     steps:
       - name: Download Android Artifact
+        if: needs.build-android.result == 'success'
         uses: actions/download-artifact@v4
         with:
           name: SmartMess-Android-APK
           path: release_files
 
       - name: Download Windows Artifact
+        if: needs.build-windows.result == 'success'
         uses: actions/download-artifact@v4
         with:
           name: SmartMess-Windows-EXE
@@ -119,7 +125,6 @@ jobs:
 
       - name: Create GitHub Release with APK and EXE
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
         with:
           tag_name: v1.0.0-${{ github.run_number }}
           name: Smart Mess Management System v1.0.0 (Release #${{ github.run_number }})
