@@ -32,9 +32,10 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Accept Android SDK Licenses
+      - name: Accept Android SDK Licenses & Setup Platform 36
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || yes | sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" || true
 
       - name: Make Gradlew Executable
         run: chmod +x frontend/android/gradlew
@@ -45,14 +46,12 @@ jobs:
           cd frontend/android
           ./gradlew assembleDebug --stacktrace --no-daemon 2>&1 | tee ../../gradle_build.log
 
-      - name: Post Error to Commit
+      - name: Upload Build Log on Failure
         if: failure()
-        run: |
-          MSG=$(tail -n 25 gradle_build.log | sed 's/"/\\"/g' | tr '\n' ' ')
-          curl -s -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "{\"body\": \"Gradle Error:\n$MSG\"}" \
-            "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments"
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-gradle-error-log
+          path: gradle_build.log
 
       - name: Prepare APK Output
         run: |
